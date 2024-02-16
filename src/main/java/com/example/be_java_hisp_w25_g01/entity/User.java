@@ -1,5 +1,7 @@
 package com.example.be_java_hisp_w25_g01.entity;
 
+import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
+import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,8 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
-    int userId;
+    Integer userId;
     String userName;
-    List<?> followed;
-    List<?> followers;
+    List<Integer> followed;
+    List<Integer> followers;
+    List<Integer> posts;
 }

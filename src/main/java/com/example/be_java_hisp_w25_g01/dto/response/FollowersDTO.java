@@ -11,9 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class UserResponseDTO {
+public class FollowersDTO {
+    //US 0003
     private Integer user_id;
     private String user_name;
-    List<User>
+    private List<UserDTO> followers;
 
 }

@@ -1,21 +1,20 @@
-package com.example.be_java_hisp_w25_g01.entity;
+package com.example.be_java_hisp_w25_g01.dto.request;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Post {
-    Integer post_id;
+public class PostDTO {
+    //US 0005
     Integer user_id;
     LocalDate date;
-    Product product;
+    ProductDTO product;
     Integer category;
     Double price;
 }

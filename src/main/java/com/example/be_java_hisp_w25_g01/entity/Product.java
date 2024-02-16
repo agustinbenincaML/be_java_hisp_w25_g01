@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
-    long productId;
+    Integer productId;
     String productName;
     String type;
     String brand;
