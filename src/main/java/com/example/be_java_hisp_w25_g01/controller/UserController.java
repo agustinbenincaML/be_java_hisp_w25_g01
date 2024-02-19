@@ -1,5 +1,6 @@
 package com.example.be_java_hisp_w25_g01.controller;
 
+import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.UserDTO;
 import com.example.be_java_hisp_w25_g01.entity.User;
@@ -11,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/users")
@@ -41,7 +40,8 @@ public class UserController {
     public ResponseEntity<List<FollowersDTO>> getSellerFollowers(@PathVariable int userId,
                                                                  @RequestParam(required = false) String order) {
         List<FollowersDTO> followers = userService.getFollowersList(userId);
-        
+
+
         if ("asc".equalsIgnoreCase(order)) {
             followers.sort(Comparator.comparing(FollowersDTO::getUser_name));
         } else if ("desc".equalsIgnoreCase(order)) {
@@ -53,14 +53,15 @@ public class UserController {
 
     //US 0004 Y 0008
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<List<UserDTO>> getFollowedSellers(@PathVariable int userId,
+    public ResponseEntity<List<FollowedDTO>> getFollowedSellers(@PathVariable int userId,
                                                             @RequestParam(required = false) String order) {
-        List<UserDTO> lSellers = userService.getFollowedSellers(userId);
+        List<FollowedDTO> lSellers = userService.getFollowedList(userId);
+
 
         if ("name_asc".equalsIgnoreCase(order)) {
-            lSellers.sort(Comparator.comparing(UserDTO::getUser_name));
+            lSellers.sort(Comparator.comparing(FollowedDTO::getUser_name));
         } else if ("name_desc".equalsIgnoreCase(order)) {
-            lSellers.sort(Comparator.comparing(UserDTO::getUser_name).reversed());
+            lSellers.sort(Comparator.comparing(FollowedDTO::getUser_name).reversed());
         }
 
         return ResponseEntity.ok(lSellers);

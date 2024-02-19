@@ -1,9 +1,6 @@
 package com.example.be_java_hisp_w25_g01.service.impl;
 
-import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.UserDTO;
+import com.example.be_java_hisp_w25_g01.dto.response.*;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.exception.NotFoundException;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
@@ -27,6 +24,7 @@ public class UserServiceImpl implements IUserService {
                 .map(this::convertUserToDto)
                 .toList();
     }
+
     @Override
     public FollowersCountDTO getFollowersCount(Integer userId){
         Optional<User> user = this.userRepository.findById(userId);
@@ -37,6 +35,7 @@ public class UserServiceImpl implements IUserService {
                 user.get().getFollowers() != null ? (long) user.get().getFollowers().size() : 0
         );
     }
+
     @Override
     public List<FollowersDTO> getFollowersList(Integer userId) {
         Optional<User> user = this.userRepository.findById(userId);
@@ -47,8 +46,13 @@ public class UserServiceImpl implements IUserService {
         return FollowersDTO.convertToFollowersDTOList(user, followers);
     }
     @Override
-    public FollowersDTO getFollowedList(Integer userId) {
-        return null;
+    public List<FollowedDTO> getFollowedList(Integer userId) {
+        Optional<User> user = this.userRepository.findById(userId);
+        if (user.isEmpty()) {throw new NotFoundException("User with id: " + userId + " not found.");}
+
+        List<User> followers = userRepository.findAllByIdIn(user.get().getFollowed());
+
+        return FollowedDTO.convertToFollowedDTOList(user, followers);
     }
 
     @Override
@@ -64,23 +68,7 @@ public class UserServiceImpl implements IUserService {
         return new MessagesDTO("User with id: " + UserId + " is now unfollowing user with id: " + userIdToUnfollow);
     }
 
-    /*
-    * Obtener un listado de todos los vendedores a los cuales sigue un
-    determinado usuario (¿A quién sigo?)
-    * un usuario es vendedor si tiene posts*/
-    public List<UserDTO> getFollowedSellers(int userId){
-        Optional<User> users = userRepository.findById(userId);
-        if (users.isPresent()){
-            User user = users.get();
 
-            List<User> followedUsers = userRepository.findAllByIdIn(user.getFollowed());
-            List<UserDTO> userDTOList = UserDTO.convertToDTOList(followedUsers);
-
-            return userDTOList;
-        }else{
-            throw new NotFoundException("Usuario no encontrado con el ID: " + userId);
-        }
-    }
 
     private UserDTO convertUserToDto(User u){
         return new UserDTO(
