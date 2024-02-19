@@ -30,12 +30,12 @@ public class PostRepositoryImpl implements IPostRepository {
     }
     private void loadPost(){
         this.listOfPost = List.of(
-                new Post(1,4, LocalDate.of(2021, Month.APRIL,04), productRepository.findById(1).get(), 100, 1500.50),
-                new Post(32,4, LocalDate.of(2021, Month.MAY,01), productRepository.findById(62).get(), 120, 2800.69),
-                new Post(18,5, LocalDate.of(2021, Month.APRIL,29),productRepository.findById(1).get(), 100, 1500.00),
-                new Post(2, 5, LocalDate.of(2022, Month.MARCH, 10), productRepository.findById(2).get(),110, 200.41),
-                new Post(3, 4, LocalDate.of(2022, Month.DECEMBER, 20), productRepository.findById(3).get(), 100, 500.00),
-                new Post(4, 4, LocalDate.of(2023, Month.APRIL, 01), productRepository.findById(4).get(),110, 200000.00)
+                new Post(1,4, LocalDate.of(2024, Month.FEBRUARY,18), productRepository.findById(1).get(), 100, 1500.50),
+                new Post(2,4, LocalDate.of(2024, Month.MAY,01), productRepository.findById(62).get(), 120, 2800.69),
+                new Post(3,5, LocalDate.of(2024, Month.APRIL,29),productRepository.findById(1).get(), 100, 1500.00),
+                new Post(4, 5, LocalDate.of(2024, Month.FEBRUARY, 15), productRepository.findById(2).get(),110, 200.41),
+                new Post(5, 4, LocalDate.of(2024, Month.FEBRUARY, 12), productRepository.findById(3).get(), 100, 500.00),
+                new Post(6, 4, LocalDate.of(2024, Month.APRIL, 01), productRepository.findById(4).get(),110, 200000.00)
         );
     }
 
@@ -58,6 +58,9 @@ public class PostRepositoryImpl implements IPostRepository {
         listOfPost.add(post);
     }
 
+    public Integer generateId(){
+        return listOfPost.getLast().getPost_id()+1;
+    }
 
 
 

@@ -9,6 +9,7 @@ import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,6 +27,8 @@ public class UserRepositoryImpl implements IUserRepository {
         this.postRepository = postRepository;
         loadUserList();
     }
+
+    /*
     private void loadUserList(){
         userList = List.of(
                 new User(1,"martinMarquez", List.of(5), null,postRepository.findByUser(1)),
@@ -36,14 +39,19 @@ public class UserRepositoryImpl implements IUserRepository {
         );
     }
 
-    public boolean createPost(Post post){
-        Optional<User> userOp = findById(post.getUser_id());
-        if(userOp.isPresent()){
-            User user = userOp.get();
+*/
+
+    private List<User> loadUserList(){
+        userList = new ArrayList<>();
+        userList.add(new User(1,"martinMarquez", new ArrayList<>(List.of(5)), new ArrayList<>(List.of()),postRepository.findByUser(1)));
+        userList.add(new User(2,"ariJaime", new ArrayList<>(List.of(4,5)), new ArrayList<>(List.of()), postRepository.findByUser(2)));
+        userList.add(new User(3,"ezeEscobar", new ArrayList<>(List.of(4,5)), new ArrayList<>(List.of()), postRepository.findByUser(3)));
+        userList.add(new User(4,"sofiaMaria", new ArrayList<>(List.of(5)), new ArrayList<>(List.of(2,3)),postRepository.findByUser(4))); // es vendedor
+        userList.add(new User(5,"leanSaracco", new ArrayList<>(List.of()), new ArrayList<>(List.of(1,2,3,4)),postRepository.findByUser(5)));// es vendedor
+        return userList;
+    }
+     public void createPost(Post post){
             postRepository.addPost(post);
-            return true;
-        }
-        return false;
     }
 
 
@@ -59,9 +67,16 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
     @Override
-    public void followUser(Integer userId, Integer userIdToFollow) {
-        Optional<User> user = findById(userId);
+    public void followUser(Integer UserId, Integer userIdToFollow) {
+        Optional<User> user = findById(UserId);
         Optional<User> userToFollow = findById(userIdToFollow);
+
+        if(user.isEmpty() || userToFollow.isEmpty()) {throw new NotFoundException("User not found.");}
+
+        user.get().getFollowed().add(userIdToFollow);
+        userToFollow.get().getFollowers().add(UserId);
+
+
     }
 
 }

@@ -15,5 +15,5 @@ public interface IUserRepository {
 
     public void followUser(Integer UserId, Integer userIdToFollow);
 
-    public boolean createPost(Post post);
+    public void createPost(Post post);
 }

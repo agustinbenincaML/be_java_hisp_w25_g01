@@ -13,6 +13,7 @@ public interface IPostRepository {
     public Optional<Post> findById(Integer id);
     public List<Post> findByUser(Integer id);
     public void addPost(Post post);
+    public Integer generateId();
 
 
 

@@ -20,7 +20,6 @@ public class ProductController {
 
     @PostMapping("/post")
     public ResponseEntity<?> postProduct(@RequestBody PostDTO post){
-
         return new ResponseEntity<>(postService.createPost(post), HttpStatus.OK);
     }
 

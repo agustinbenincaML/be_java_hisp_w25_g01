@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,8 +73,12 @@ public class PostServiceImpl implements IPostService {
     @Override
     public MessagesDTO createPost(PostDTO postDto){
         try {
-            userRepository.createPost(convertPostDtoToPost(postDto));
-            return new MessagesDTO("Post creado exitosamente");
+            Optional<User> userOp = userRepository.findById(postDto.getUser_id());
+            if(userOp.isPresent()){
+                userRepository.createPost(convertPostDtoToPost(postDto));
+                throw new BadRequestException("Post existente");
+            }
+           throw new BadRequestException("Usuario no encontrado - ID:"+postDto.getUser_id());
         }
         catch (Exception e){
             throw new BadRequestException("Error al crear el post - "+e.getMessage());
@@ -82,7 +87,7 @@ public class PostServiceImpl implements IPostService {
 
     private Post convertPostDtoToPost(PostDTO p){
         return new Post(
-                90,
+                postRepository.generateId(),
                 p.getUser_id(),
                 p.getDate(),
                 convertProductDtoToProduct(p.getProduct()),

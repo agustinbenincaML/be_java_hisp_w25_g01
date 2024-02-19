@@ -22,7 +22,7 @@ public class UserController {
     }
 
     //US 0001
-    @PostMapping("/{userId}/follow/{userIdToFollow}")
+    @PostMapping("/{UserId}/follow/{userIdToFollow}")
     public ResponseEntity<?> followUser(@PathVariable int UserId, @PathVariable int userIdToFollow){
         return new ResponseEntity<>(userService.followUser(UserId,userIdToFollow),HttpStatus.OK);
     };

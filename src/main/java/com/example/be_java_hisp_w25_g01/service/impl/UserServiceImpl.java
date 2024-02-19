@@ -45,8 +45,11 @@ public class UserServiceImpl implements IUserService {
         Optional<User> user = this.userRepository.findById(userId);
         if (user.isEmpty()) {throw new NotFoundException("User with id: " + userId + " not found.");}
         List<User> followers = user.get().getFollowers()
-                .stream().forEach(f -> userRepository.findById(f));
-        return null;
+                .stream().map(userRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+        return (FollowersDTO) UserDTO.convertToDTOList(followers);
     }
 
     @Override
@@ -56,7 +59,9 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public MessagesDTO followUser(Integer UserId, Integer userIdToFollow) {
-        return null;
+        userRepository.followUser(UserId, userIdToFollow);
+        return new MessagesDTO("User with id: " + UserId + " is now following user with id: " + userIdToFollow);
+
     }
 
     /*

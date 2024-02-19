@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 @Data
 @AllArgsConstructor
@@ -19,6 +20,19 @@ public class User {
     List<Integer> followed;
     List<Integer> followers;
     List<Post> posts;
+
+
+    public void addFollowed(Integer userIdToFollow) {
+        if (followed == null) {
+            followed = new ArrayList<>();
+        }
+        followed.add(userIdToFollow);
+    }
+
+    public void addFollowers(Integer userIdToFollow) {
+        if (followers == null) {
+            followers = new ArrayList<>();
+        }
+        followers.add(userIdToFollow);
+    }
 }
-
-
