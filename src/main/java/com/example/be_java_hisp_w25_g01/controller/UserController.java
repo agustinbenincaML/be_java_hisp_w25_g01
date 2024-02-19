@@ -1,12 +1,14 @@
 package com.example.be_java_hisp_w25_g01.controller;
 
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
+import com.example.be_java_hisp_w25_g01.dto.response.UserDTO;
 import com.example.be_java_hisp_w25_g01.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -37,24 +39,33 @@ public class UserController {
 
     //US 0003
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<List<FollowersDTO>> getSellerFollowers(@PathVariable int userId){
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<?> getSellerFollowers(@PathVariable int userId,
+                                                @RequestParam(required = false) String ordenamiento) {
+        List<UserDTO> followers = (List<UserDTO>) userService.getFollowersList(userId);
+
+        if ("asc".equalsIgnoreCase(ordenamiento)) {
+            followers.sort(Comparator.comparing(UserDTO::getUser_name));
+        } else if ("desc".equalsIgnoreCase(ordenamiento)) {
+            followers.sort(Comparator.comparing(UserDTO::getUser_name).reversed());
+        }
+
+        return ResponseEntity.ok(followers);
     }
 
     //US 0004
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<?> getFollowedSellers(@PathVariable int userId){
+    public ResponseEntity<List<UserDTO>> getFollowedSellers(@PathVariable int userId,
+                                                            @RequestParam(required = false) String ordenamiento) {
+        List<UserDTO> lSellers = userService.getFollowedSellers(userId);
 
-            return ResponseEntity.ok().build();
-    }
-/*
-    //US 008
-    @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<List<FollowersDTO>> getFollowerList(@PathVariable int userId){
-        return ResponseEntity.ok().build();
+        if ("asc".equalsIgnoreCase(ordenamiento)) {
+            lSellers.sort(Comparator.comparing(UserDTO::getUser_name));
+        } else if ("desc".equalsIgnoreCase(ordenamiento)) {
+            lSellers.sort(Comparator.comparing(UserDTO::getUser_name).reversed());
+        }
 
+        return ResponseEntity.ok(lSellers);
     }
-*/
 
 
 }

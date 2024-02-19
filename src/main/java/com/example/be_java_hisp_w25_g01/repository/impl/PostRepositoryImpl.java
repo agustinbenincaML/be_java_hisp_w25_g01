@@ -59,9 +59,8 @@ public class PostRepositoryImpl implements IPostRepository {
     }
 
     public Integer generateId(){
-        return listOfPost.getLast().getPost_id()+1;
+        return listOfPost.get(listOfPost.size()-1).getPost_id()+1;
     }
-
 
 
 }

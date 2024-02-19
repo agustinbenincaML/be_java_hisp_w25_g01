@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     @Autowired
     IPostService postService;
-    //public ProductController(PostServiceImpl postService) {this.postService = postService;}
 
 
     @PostMapping("/post")
@@ -28,6 +27,5 @@ public class ProductController {
     public ResponseEntity<PostsListDTO> listPosts(@PathVariable Integer userId){
         return new ResponseEntity<>(postService.getLastPostsFollowedBy(userId), HttpStatus.OK);
     }
-
 
 }
