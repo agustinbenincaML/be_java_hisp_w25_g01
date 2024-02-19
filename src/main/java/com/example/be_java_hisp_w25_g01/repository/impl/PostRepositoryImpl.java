@@ -7,7 +7,9 @@ import com.example.be_java_hisp_w25_g01.repository.IProductRepository;
 import com.example.be_java_hisp_w25_g01.service.impl.PostServiceImpl;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -15,21 +17,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class PostRepositoryImpl implements IPostRepository {
 
-    private IProductRepository productRepository;
+    IProductRepository productRepository;
 
+    private List<Post> listOfPost;
+    @Autowired
     public PostRepositoryImpl(IProductRepository productRepository){
-        this.productRepository=productRepository;
+        this.productRepository = productRepository;
+        loadPost();
     }
-    private List<Post> listOfPost = List.of(
-            new Post(1,4, LocalDate.of(2021, Month.APRIL,04), productRepository.findById(1).get(), 100, 1500.50),
-            new Post(32,4, LocalDate.of(2021, Month.MAY,01), productRepository.findById(62).get(), 120, 2800.69),
-            new Post(18,5, LocalDate.of(2021, Month.APRIL,29),productRepository.findById(1).get(), 100, 1500.00),
-            new Post(2, 5, LocalDate.of(2022, Month.MARCH, 10), productRepository.findById(2).get(),110, 200.41),
-            new Post(3, 4, LocalDate.of(2022, Month.DECEMBER, 20), productRepository.findById(3).get(), 100, 500.00),
-            new Post(4, 4, LocalDate.of(2023, Month.APRIL, 01), productRepository.findById(4).get(),110, 200000.00)
-    );
+    private void loadPost(){
+        this.listOfPost = List.of(
+                new Post(1,4, LocalDate.of(2021, Month.APRIL,04), productRepository.findById(1).get(), 100, 1500.50),
+                new Post(32,4, LocalDate.of(2021, Month.MAY,01), productRepository.findById(62).get(), 120, 2800.69),
+                new Post(18,5, LocalDate.of(2021, Month.APRIL,29),productRepository.findById(1).get(), 100, 1500.00),
+                new Post(2, 5, LocalDate.of(2022, Month.MARCH, 10), productRepository.findById(2).get(),110, 200.41),
+                new Post(3, 4, LocalDate.of(2022, Month.DECEMBER, 20), productRepository.findById(3).get(), 100, 500.00),
+                new Post(4, 4, LocalDate.of(2023, Month.APRIL, 01), productRepository.findById(4).get(),110, 200000.00)
+        );
+    }
 
     public List<Post> getAll(){
         return listOfPost;

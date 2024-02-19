@@ -9,11 +9,13 @@ import java.util.List;
 
 public interface IUserService {
 
+    List<UserDTO> getAll();
     FollowersDTO getFollowersList(Integer userId);
     FollowersDTO getFollowedList(Integer userId);
     FollowersCountDTO  getFollowersCount(Integer userId);
 
     MessagesDTO followUser (Integer UserId,Integer userIdToFollow );
     List<UserDTO> getFollowedSellers(int userId);
+
 
 }

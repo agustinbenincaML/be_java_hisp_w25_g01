@@ -14,14 +14,18 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    IUserService userService;
+    private IUserService userService;
 
+    @GetMapping("/getAll")
+    public  ResponseEntity<?> getAll(){
+        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+    }
 
     //US 0001
-    @PostMapping("/users/{userId}/follow/{userIdToFollow}")
+    @PostMapping("/{userId}/follow/{userIdToFollow}")
     public ResponseEntity<?> followUser(@PathVariable int UserId, @PathVariable int userIdToFollow){
-        return new ResponseEntity<>(userService.followUser(UserId,userIdToFollow);
-    }
+        return new ResponseEntity<>(userService.followUser(UserId,userIdToFollow),HttpStatus.OK);
+    };
 
 
     //US 0002
@@ -37,17 +41,17 @@ public class UserController {
 
     //US 0004
     @GetMapping("/{userId}/followed/list")
-        public ResponseEntity<?> getFollowedSellers(@PathVariable int userId){
+    public ResponseEntity<?> getFollowedSellers(@PathVariable int userId){
             return ResponseEntity.ok().build();
     }
-
+/*
     //US 008
     @GetMapping("/{userId}/followers/list")
     public ResponseEntity<List<FollowersDTO>> getFollowerList(@PathVariable int userId){
         return ResponseEntity.ok().build();
 
     }
-
+*/
 
 
 }

@@ -9,19 +9,21 @@ import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
 import com.example.be_java_hisp_w25_g01.repository.impl.PostRepositoryImpl;
 import com.example.be_java_hisp_w25_g01.service.IPostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Service
 public class PostServiceImpl implements IPostService {
 
+    @Autowired
     private IPostRepository postRepository;
+    @Autowired
     private IUserRepository userRepository;
-    public PostServiceImpl(PostRepositoryImpl postRepository, IUserRepository userRepository) {
-        this.postRepository = postRepository;
-        this.userRepository = userRepository;
-    }
+
 
     @Override
     public PostsListDTO getLastPostsFollowedBy(Integer userId){
