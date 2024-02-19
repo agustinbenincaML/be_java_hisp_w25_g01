@@ -37,15 +37,16 @@ public class UserController {
 
     //US 0003 Y 0008
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<List<FollowersDTO>> getSellerFollowers(@PathVariable int userId,
+    public ResponseEntity<FollowersDTO> getSellerFollowers(@PathVariable int userId,
                                                                  @RequestParam(required = false) String order) {
-        List<FollowersDTO> followers = userService.getFollowersList(userId);
+        FollowersDTO followers = userService.getFollowersList(userId);
 
-
-        if ("asc".equalsIgnoreCase(order)) {
-            followers.sort(Comparator.comparing(FollowersDTO::getUser_name));
-        } else if ("desc".equalsIgnoreCase(order)) {
-            followers.sort(Comparator.comparing(FollowersDTO::getUser_name).reversed());
+        if ("name_asc".equalsIgnoreCase(order)) {
+            followers.setFollowers(followers.getFollowers().stream()
+                    .sorted(Comparator.comparing(UserDTO::getUser_name)).toList());
+        } else if ("name_desc".equalsIgnoreCase(order)) {
+            followers.setFollowers(followers.getFollowers().stream()
+                    .sorted(Comparator.comparing(UserDTO::getUser_name).reversed()).toList());
         }
 
         return ResponseEntity.ok(followers);
@@ -53,18 +54,21 @@ public class UserController {
 
     //US 0004 Y 0008
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<List<FollowedDTO>> getFollowedSellers(@PathVariable int userId,
-                                                            @RequestParam(required = false) String order) {
-        List<FollowedDTO> lSellers = userService.getFollowedList(userId);
-
+    public ResponseEntity<FollowedDTO> getFollowedSellers(@PathVariable int userId,
+                                                                @RequestParam(required = false) String order) {
+        FollowedDTO followed = userService.getFollowedList(userId);
 
         if ("name_asc".equalsIgnoreCase(order)) {
-            lSellers.sort(Comparator.comparing(FollowedDTO::getUser_name));
+            followed.setFollowed(followed.getFollowed().stream()
+                    .sorted(Comparator.comparing(UserDTO::getUser_name)).toList());
+
         } else if ("name_desc".equalsIgnoreCase(order)) {
-            lSellers.sort(Comparator.comparing(FollowedDTO::getUser_name).reversed());
+            followed.setFollowed(followed.getFollowed().stream()
+                    .sorted(Comparator.comparing(UserDTO::getUser_name).reversed()).toList());
         }
 
-        return ResponseEntity.ok(lSellers);
+        return ResponseEntity.ok(followed);
+
     }
 
 

@@ -73,12 +73,15 @@ public class PostServiceImpl implements IPostService {
     @Override
     public MessagesDTO createPost(PostDTO postDto){
         try {
-            Optional<User> userOp = userRepository.findById(postDto.getUser_id());
-            if(userOp.isPresent()){
-                userRepository.createPost(convertPostDtoToPost(postDto));
-                return new MessagesDTO("Post created successfully");
+            if(postDto.getDate().isAfter(LocalDate.now())){
+                throw new BadRequestException("Invalid future date");
             }
-            throw new BadRequestException("User Not Found - ID:"+postDto.getUser_id());
+            Optional<User> userOp = userRepository.findById(postDto.getUser_id());
+            if(!userOp.isPresent()){
+                throw new BadRequestException("User Not Found - ID:"+postDto.getUser_id());
+            }
+            userRepository.createPost(convertPostDtoToPost(postDto));
+            return new MessagesDTO("Post created successfully");
         }
         catch (Exception e){
             throw new BadRequestException("Error creating Post - "+e.getMessage());

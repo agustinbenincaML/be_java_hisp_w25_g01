@@ -37,7 +37,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<FollowersDTO> getFollowersList(Integer userId) {
+    public FollowersDTO getFollowersList(Integer userId) {
         Optional<User> user = this.userRepository.findById(userId);
         if (user.isEmpty()) {throw new NotFoundException("User with id: " + userId + " not found.");}
 
@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService {
         return FollowersDTO.convertToFollowersDTOList(user, followers);
     }
     @Override
-    public List<FollowedDTO> getFollowedList(Integer userId) {
+    public FollowedDTO getFollowedList(Integer userId) {
         Optional<User> user = this.userRepository.findById(userId);
         if (user.isEmpty()) {throw new NotFoundException("User with id: " + userId + " not found.");}
 
