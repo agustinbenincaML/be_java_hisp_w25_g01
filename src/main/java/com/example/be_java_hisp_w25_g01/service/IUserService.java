@@ -15,6 +15,9 @@ public interface IUserService {
     FollowersCountDTO  getFollowersCount(Integer userId);
 
     MessagesDTO followUser (Integer UserId,Integer userIdToFollow );
+
+    MessagesDTO unfollowUser (Integer UserId,Integer userIdToUnfollow );
+
     List<UserDTO> getFollowedSellers(int userId);
 
 

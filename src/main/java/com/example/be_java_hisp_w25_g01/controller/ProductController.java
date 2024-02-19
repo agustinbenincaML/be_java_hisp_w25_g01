@@ -30,12 +30,12 @@ public class ProductController {
     //US 0006 & US 0009
     @GetMapping("/followed/{userId}/list")
     public ResponseEntity<PostsListDTO> listPosts(@PathVariable Integer userId,
-                                                  @RequestParam(required = false) String ordenamiento){
+                                                  @RequestParam(required = false) String order){
         PostsListDTO posts = postService.getLastPostsFollowedBy(userId);
-        if ("date_asc".equalsIgnoreCase(ordenamiento)) {
-            posts.getPostsList().sort(Comparator.comparing(PostDTO::getDate));
-        } else if ("date_desc".equalsIgnoreCase(ordenamiento)) {
-            posts.getPostsList().sort(Comparator.comparing(PostDTO::getDate).reversed());
+        if ("date_asc".equalsIgnoreCase(order)) {
+            posts.setPostsList(posts.getPostsList().stream().sorted(Comparator.comparing(PostDTO::getDate)).toList());
+        } else if ("date_desc".equalsIgnoreCase(order)) {
+            posts.setPostsList(posts.getPostsList().stream().sorted(Comparator.comparing(PostDTO::getDate).reversed()).toList());
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }

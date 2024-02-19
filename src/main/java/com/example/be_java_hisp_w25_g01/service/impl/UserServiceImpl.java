@@ -58,6 +58,12 @@ public class UserServiceImpl implements IUserService {
 
     }
 
+    @Override
+    public MessagesDTO unfollowUser(Integer UserId, Integer userIdToUnfollow) {
+        userRepository.unfollowUser(UserId, userIdToUnfollow);
+        return new MessagesDTO("User with id: " + UserId + " is now unfollowing user with id: " + userIdToUnfollow);
+    }
+
     /*
     * Obtener un listado de todos los vendedores a los cuales sigue un
     determinado usuario (¿A quién sigo?)

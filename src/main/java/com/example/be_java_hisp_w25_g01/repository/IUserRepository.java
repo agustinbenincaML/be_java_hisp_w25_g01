@@ -15,6 +15,8 @@ public interface IUserRepository {
 
     public void followUser(Integer UserId, Integer userIdToFollow);
 
+    public void unfollowUser(Integer UserId, Integer userIdToUnfollow);
+
     public void createPost(Post post);
     List<User> findAllByIdIn(List<Integer> userIds);
 }

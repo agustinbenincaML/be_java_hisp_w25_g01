@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,17 +18,17 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-
+/*
     @GetMapping("/getAll")
     public  ResponseEntity<?> getAll(){
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
-
+*/
     //US 0001
     @PostMapping("/{UserId}/follow/{userIdToFollow}")
     public ResponseEntity<?> followUser(@PathVariable int UserId, @PathVariable int userIdToFollow){
         return new ResponseEntity<>(userService.followUser(UserId,userIdToFollow),HttpStatus.OK);
-    };
+    }
 
 
     //US 0002
@@ -40,8 +41,10 @@ public class UserController {
     //US 0003
     @GetMapping("/{userId}/followers/list")
     public ResponseEntity<List<FollowersDTO>> getSellerFollowers(@PathVariable int userId,
-                                                @RequestParam(required = false) String ordenamiento) {
-        List<FollowersDTO> followers = (List<FollowersDTO>) userService.getFollowersList(userId);
+                                                                 @RequestParam(required = false) String ordenamiento) {
+        List<FollowersDTO> followers = userService.getFollowersList(userId);
+
+        
 
         if ("asc".equalsIgnoreCase(ordenamiento)) {
             followers.sort(Comparator.comparing(FollowersDTO::getUser_name));
@@ -66,6 +69,13 @@ public class UserController {
 
         return ResponseEntity.ok(lSellers);
     }
+
+
+    //US 0007
+    @PostMapping("{UserId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity<?> unfollowUser(@PathVariable int UserId, @PathVariable int userIdToUnfollow){
+        return new ResponseEntity<>(userService.unfollowUser(UserId,userIdToUnfollow),HttpStatus.OK);
+    };
 
 
 }

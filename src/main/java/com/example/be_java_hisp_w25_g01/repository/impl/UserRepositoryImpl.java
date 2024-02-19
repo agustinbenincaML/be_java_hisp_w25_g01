@@ -4,6 +4,7 @@ import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
 import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.exception.NotFoundException;
+import com.example.be_java_hisp_w25_g01.exception.BadRequestException;
 import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,19 +67,36 @@ public class UserRepositoryImpl implements IUserRepository {
         Optional<User> user = findById(UserId);
         Optional<User> userToFollow = findById(userIdToFollow);
 
-        if(UserId == userIdToFollow) {throw new NotFoundException("User cannot follow itself.");}
+        if(UserId == userIdToFollow) {throw new BadRequestException("User cannot follow itself.");}
 
-        if(user.isEmpty() || userToFollow.isEmpty()) {throw new NotFoundException("User not found.");}
+        if(user.isEmpty() || userToFollow.isEmpty()) {throw new BadRequestException("User not found.");}
 
-        if(postRepository.findByUser(userIdToFollow).isEmpty()) {throw new NotFoundException("The user you want to follow is not a seller");}
+        if(postRepository.findByUser(userIdToFollow).isEmpty()) {throw new BadRequestException("The user you want to follow is not a seller");}
 
-        if(user.get().getFollowed().contains(userIdToFollow)) {throw new NotFoundException("User is already following this user.");}
+        if(user.get().getFollowed().contains(userIdToFollow)) {throw new BadRequestException("User is already following this user.");}
 
         user.get().getFollowed().add(userIdToFollow);
         userToFollow.get().getFollowers().add(UserId);
 
 
     }
+
+    @Override
+    public void unfollowUser(Integer UserId, Integer userIdToUnfollow) {
+        Optional<User> user = findById(UserId);
+        Optional<User> userToUnfollow = findById(userIdToUnfollow);
+
+        if(UserId == userIdToUnfollow) {throw new BadRequestException("User cannot unfollow itself.");}
+
+        if(user.isEmpty() || userToUnfollow.isEmpty()) {throw new BadRequestException("User not found.");}
+
+        if(!user.get().getFollowed().contains(userIdToUnfollow)) {throw new BadRequestException("User is not following this user.");}
+
+        user.get().getFollowed().remove(userIdToUnfollow);
+        userToUnfollow.get().getFollowers().remove(UserId);
+    }
+
+
     @Override
     public List<User> findAllByIdIn(List<Integer> userIds) {
         return userList.stream()

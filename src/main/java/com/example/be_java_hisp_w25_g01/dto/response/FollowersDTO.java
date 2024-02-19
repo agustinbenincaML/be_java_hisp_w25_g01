@@ -1,6 +1,7 @@
 package com.example.be_java_hisp_w25_g01.dto.response;
 
 import com.example.be_java_hisp_w25_g01.entity.User;
+import com.example.be_java_hisp_w25_g01.exception.NotFoundException;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -32,7 +33,5 @@ public class FollowersDTO {
         followersDTOList.add(followersDTO);
 
         return followersDTOList;
-
-
     }
 }
