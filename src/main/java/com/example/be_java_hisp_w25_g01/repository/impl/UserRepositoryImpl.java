@@ -50,11 +50,16 @@ public class UserRepositoryImpl implements IUserRepository {
         userList.add(new User(5,"leanSaracco", new ArrayList<>(List.of()), new ArrayList<>(List.of(1,2,3,4)),postRepository.findByUser(5)));// es vendedor
         return userList;
     }
-     public void createPost(Post post){
+    public void createPost(Post post){
+        Optional<User> userOp = findById(post.getUser_id());
+        if(userOp.isPresent()){
+            User user = userOp.get();
+            List<Post> userPosts = new ArrayList<>(user.getPosts());
+            userPosts.add(post);
+            user.setPosts(userPosts);
             postRepository.addPost(post);
+        }
     }
-
-
 
 
     public List<User> findAll() { return userList; }

@@ -7,12 +7,9 @@ import com.example.be_java_hisp_w25_g01.dto.response.UserDTO;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.exception.NotFoundException;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
-import com.example.be_java_hisp_w25_g01.repository.impl.UserRepositoryImpl;
 import com.example.be_java_hisp_w25_g01.service.IUserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +38,7 @@ public class UserServiceImpl implements IUserService {
         );
     }
     @Override
-    public FollowersDTO getFollowersList(Integer userId) {
+    public List<FollowersDTO> getFollowersList(Integer userId) {
         Optional<User> user = this.userRepository.findById(userId);
         if (user.isEmpty()) {throw new NotFoundException("User with id: " + userId + " not found.");}
         List<User> followers = user.get().getFollowers()
@@ -49,9 +46,10 @@ public class UserServiceImpl implements IUserService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
-        return (FollowersDTO) UserDTO.convertToDTOList(followers);
-    }
 
+        return new List<FollowersDTO>((user.get().getUserId(), user.get().getUserName(),
+                UserDTO.convertToDTOList(followers));
+    }
     @Override
     public FollowersDTO getFollowedList(Integer userId) {
         return null;

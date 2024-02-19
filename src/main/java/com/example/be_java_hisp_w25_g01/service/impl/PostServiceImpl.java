@@ -76,12 +76,12 @@ public class PostServiceImpl implements IPostService {
             Optional<User> userOp = userRepository.findById(postDto.getUser_id());
             if(userOp.isPresent()){
                 userRepository.createPost(convertPostDtoToPost(postDto));
-                throw new BadRequestException("Post existente");
+                return new MessagesDTO("Post created successfully");
             }
-           throw new BadRequestException("Usuario no encontrado - ID:"+postDto.getUser_id());
+            throw new BadRequestException("User Not Found - ID:"+postDto.getUser_id());
         }
         catch (Exception e){
-            throw new BadRequestException("Error al crear el post - "+e.getMessage());
+            throw new BadRequestException("Error creating Post - "+e.getMessage());
         }
     }
 

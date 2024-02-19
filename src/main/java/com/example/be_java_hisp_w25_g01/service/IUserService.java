@@ -10,7 +10,7 @@ import java.util.List;
 public interface IUserService {
 
     List<UserDTO> getAll();
-    FollowersDTO getFollowersList(Integer userId);
+    List<FollowersDTO> getFollowersList(Integer userId);
     FollowersDTO getFollowedList(Integer userId);
     FollowersCountDTO  getFollowersCount(Integer userId);
 

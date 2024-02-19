@@ -39,16 +39,16 @@ public class UserController {
 
     //US 0003
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity<?> getSellerFollowers(@PathVariable int userId,
+    public ResponseEntity<List<FollowersDTO>> getSellerFollowers(@PathVariable int userId,
                                                 @RequestParam(required = false) String ordenamiento) {
-        List<UserDTO> followers = (List<UserDTO>) userService.getFollowersList(userId);
+        List<FollowersDTO> followers = (List<FollowersDTO>) userService.getFollowersList(userId);
 
         if ("asc".equalsIgnoreCase(ordenamiento)) {
-            followers.sort(Comparator.comparing(UserDTO::getUser_name));
+            followers.sort(Comparator.comparing(FollowersDTO::getUser_name));
         } else if ("desc".equalsIgnoreCase(ordenamiento)) {
-            followers.sort(Comparator.comparing(UserDTO::getUser_name).reversed());
+            followers.sort(Comparator.comparing(FollowersDTO::getUser_name).reversed());
         }
-
+        
         return ResponseEntity.ok(followers);
     }
 
