@@ -1,6 +1,7 @@
 package com.example.be_java_hisp_w25_g01.repository.impl;
 
 import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
+import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.exception.NotFoundException;
 import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
@@ -33,6 +34,16 @@ public class UserRepositoryImpl implements IUserRepository {
                 new User(4,"sofiaMaria", List.of(5), List.of(2,3),postRepository.findByUser(4)), // es vendedor
                 new User(5,"leanSaracco", null, List.of(1,2,3,4),postRepository.findByUser(5))// es vendedor
         );
+    }
+
+    public boolean createPost(Post post){
+        Optional<User> userOp = findById(post.getUser_id());
+        if(userOp.isPresent()){
+            User user = userOp.get();
+            postRepository.addPost(post);
+            return true;
+        }
+        return false;
     }
 
 

@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements IUserService {
     @Autowired
     public IUserRepository userRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
 
     @Override
@@ -39,14 +37,15 @@ public class UserServiceImpl implements IUserService {
         return new FollowersCountDTO(
                 user.get().getUserId(),
                 user.get().getUserName(),
-                (long) user.get().getFollowers().size()
+                user.get().getFollowers() != null ? (long) user.get().getFollowers().size() : 0
         );
     }
     @Override
     public FollowersDTO getFollowersList(Integer userId) {
-        Optional<User> userList = this.userRepository.findById(userId);
-        if (userList.isEmpty()) {throw new NotFoundException("User with id: " + userId + " not found.");}
-        List<User> followers = userList.get().getFollowers();
+        Optional<User> user = this.userRepository.findById(userId);
+        if (user.isEmpty()) {throw new NotFoundException("User with id: " + userId + " not found.");}
+        List<User> followers = user.get().getFollowers()
+                .stream().forEach(f -> userRepository.findById(f));
         return null;
     }
 
@@ -70,9 +69,11 @@ public class UserServiceImpl implements IUserService {
                 .filter(user -> user.getPosts() != null && !user.getPosts().isEmpty())
                 .collect(Collectors.toList());
         if (sellers.isEmpty()){
-            return null;
+            throw new NotFoundException("Usuario no encontrado con el ID: " + userId);
         }
-        return null;
+        List<UserDTO> userDTOList = UserDTO.convertToDTOList(sellers);
+
+        return userDTOList;
     }
 
     private UserDTO convertUserToDto(User u){

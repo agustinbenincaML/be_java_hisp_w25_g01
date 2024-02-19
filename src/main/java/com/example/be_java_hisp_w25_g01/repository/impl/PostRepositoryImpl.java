@@ -54,6 +54,10 @@ public class PostRepositoryImpl implements IPostRepository {
                 .toList();
     };
 
+    public void addPost(Post post){
+        listOfPost.add(post);
+    }
+
 
 
 

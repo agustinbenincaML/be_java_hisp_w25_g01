@@ -20,3 +20,5 @@ public class User {
     List<Integer> followers;
     List<Post> posts;
 }
+
+
