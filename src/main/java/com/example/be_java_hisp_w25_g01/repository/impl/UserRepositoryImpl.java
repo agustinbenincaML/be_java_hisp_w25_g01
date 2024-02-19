@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -28,18 +29,7 @@ public class UserRepositoryImpl implements IUserRepository {
         loadUserList();
     }
 
-    /*
-    private void loadUserList(){
-        userList = List.of(
-                new User(1,"martinMarquez", List.of(5), null,postRepository.findByUser(1)),
-                new User(2,"ariJaime", List.of(4,5), null, postRepository.findByUser(2)),
-                new User(3,"ezeEscobar", List.of(4,5), null, postRepository.findByUser(3)),
-                new User(4,"sofiaMaria", List.of(5), List.of(2,3),postRepository.findByUser(4)), // es vendedor
-                new User(5,"leanSaracco", null, List.of(1,2,3,4),postRepository.findByUser(5))// es vendedor
-        );
-    }
-
-*/
+   
 
     private List<User> loadUserList(){
         userList = new ArrayList<>();
@@ -76,12 +66,24 @@ public class UserRepositoryImpl implements IUserRepository {
         Optional<User> user = findById(UserId);
         Optional<User> userToFollow = findById(userIdToFollow);
 
+        if(UserId == userIdToFollow) {throw new NotFoundException("User cannot follow itself.");}
+
         if(user.isEmpty() || userToFollow.isEmpty()) {throw new NotFoundException("User not found.");}
+
+        if(postRepository.findByUser(userIdToFollow).isEmpty()) {throw new NotFoundException("The user you want to follow is not a seller");}
+
+        if(user.get().getFollowed().contains(userIdToFollow)) {throw new NotFoundException("User is already following this user.");}
 
         user.get().getFollowed().add(userIdToFollow);
         userToFollow.get().getFollowers().add(UserId);
 
 
+    }
+    @Override
+    public List<User> findAllByIdIn(List<Integer> userIds) {
+        return userList.stream()
+                .filter(user -> userIds.contains(user.getUserId()))
+                .collect(Collectors.toList());
     }
 
 }

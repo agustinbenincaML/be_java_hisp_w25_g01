@@ -41,14 +41,10 @@ public class UserServiceImpl implements IUserService {
     public List<FollowersDTO> getFollowersList(Integer userId) {
         Optional<User> user = this.userRepository.findById(userId);
         if (user.isEmpty()) {throw new NotFoundException("User with id: " + userId + " not found.");}
-        List<User> followers = user.get().getFollowers()
-                .stream().map(userRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
 
-        return new List<FollowersDTO>((user.get().getUserId(), user.get().getUserName(),
-                UserDTO.convertToDTOList(followers));
+        List<User> followers = userRepository.findAllByIdIn(user.get().getFollowers());
+
+        return FollowersDTO.convertToFollowersDTOList(user, followers);
     }
     @Override
     public FollowersDTO getFollowedList(Integer userId) {
@@ -67,16 +63,17 @@ public class UserServiceImpl implements IUserService {
     determinado usuario (¿A quién sigo?)
     * un usuario es vendedor si tiene posts*/
     public List<UserDTO> getFollowedSellers(int userId){
-        List<User> lUsers = userRepository.findAll();
-        List<User> sellers = lUsers.stream()
-                .filter(user -> user.getPosts() != null && !user.getPosts().isEmpty())
-                .collect(Collectors.toList());
-        if (sellers.isEmpty()){
+        Optional<User> users = userRepository.findById(userId);
+        if (users.isPresent()){
+            User user = users.get();
+
+            List<User> followedUsers = userRepository.findAllByIdIn(user.getFollowed());
+            List<UserDTO> userDTOList = UserDTO.convertToDTOList(followedUsers);
+
+            return userDTOList;
+        }else{
             throw new NotFoundException("Usuario no encontrado con el ID: " + userId);
         }
-        List<UserDTO> userDTOList = UserDTO.convertToDTOList(sellers);
-
-        return userDTOList;
     }
 
     private UserDTO convertUserToDto(User u){

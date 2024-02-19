@@ -48,7 +48,7 @@ public class UserController {
         } else if ("desc".equalsIgnoreCase(ordenamiento)) {
             followers.sort(Comparator.comparing(FollowersDTO::getUser_name).reversed());
         }
-        
+
         return ResponseEntity.ok(followers);
     }
 
