@@ -20,8 +20,8 @@ public class ProductController {
 
     @PostMapping("/post")
     public ResponseEntity<?> postProduct(@RequestBody PostDTO post){
-        //code
-        return new ResponseEntity<>("", HttpStatus.OK);
+
+        return new ResponseEntity<>(postService.createPost(post), HttpStatus.OK);
     }
 
     //US 0006

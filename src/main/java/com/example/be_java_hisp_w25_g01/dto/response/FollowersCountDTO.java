@@ -13,6 +13,6 @@ public class FollowersCountDTO {
     //US 0002
     Integer user_id;
     String user_name;
-    Integer followers_count;
+    Long followers_count;
 
 }

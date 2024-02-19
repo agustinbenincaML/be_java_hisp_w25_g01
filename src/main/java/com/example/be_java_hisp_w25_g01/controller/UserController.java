@@ -30,7 +30,9 @@ public class UserController {
 
     //US 0002
     @GetMapping("/{userId}/followers/count")
-    public ResponseEntity<?> getFollowersCount(@PathVariable int userId){return null;};
+    public ResponseEntity<?> getFollowersCount(@PathVariable int userId){
+        return new ResponseEntity<>(userService.getFollowersCount(userId));
+    };
 
 
     //US 0003
@@ -42,6 +44,7 @@ public class UserController {
     //US 0004
     @GetMapping("/{userId}/followed/list")
     public ResponseEntity<?> getFollowedSellers(@PathVariable int userId){
+
             return ResponseEntity.ok().build();
     }
 /*
