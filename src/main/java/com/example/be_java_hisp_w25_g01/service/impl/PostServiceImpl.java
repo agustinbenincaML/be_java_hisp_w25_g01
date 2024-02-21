@@ -92,10 +92,7 @@ public class PostServiceImpl implements IPostService {
             throw new BadRequestException("Product Not Found - ID: "+postDto.getProduct().getProduct_id());
         }
         Post post = convertPostDtoToPost(postDto);
-        //Post mapperPost = modelMapper.map(postDto, Post.class);
-        //userRepository.createPost(mapperPost);
         userRepository.createPost(post);
-        //postRepository.addPost(mapperPost);
         postRepository.addPost(post);
 
         return new MessagesDTO("Post created successfully");
@@ -135,7 +132,12 @@ public class PostServiceImpl implements IPostService {
         );
     }
     private PostDTO convertPostToPostDto(Post post){
-        return null;
+        ProductDTO productDTO = convertProductToProductDto(productRepository.findById(post.getProduct()).get());
+        return new PostDTO(post.getPost_id(),
+                post.getDate(),
+                productDTO,
+                post.getCategory(),
+                post.getPrice());
     }
     private PostsListDTO convertPostListToPostListDTO(List<Post> posts, Integer userId){
         List<PostDTO> listOfDtos = posts.stream().map(this::convertPostToPostDto).toList();

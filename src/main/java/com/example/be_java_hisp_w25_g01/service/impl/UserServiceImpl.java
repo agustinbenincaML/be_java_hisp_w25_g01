@@ -49,7 +49,7 @@ public class UserServiceImpl implements IUserService {
         if (user.isEmpty()) { throw new NotFoundException("User with id: " + userId + " not found."); }
         List<User> followers = userRepository.findAllByIdIn(user.get().getFollowers());
 
-        if (order != null) { orderList(followers, order); }
+        if (order != null) { return convertToFollowersDTO(user, orderList(followers, order)); }
         return convertToFollowersDTO(user, followers);
     }
     @Override
@@ -58,7 +58,8 @@ public class UserServiceImpl implements IUserService {
         if (user.isEmpty()) { throw new NotFoundException("User with id: " + userId + " not found."); }
         List<User> followed = userRepository.findAllByIdIn(user.get().getFollowed());
 
-        if (order != null) { orderList(followed, order); }
+        if (order != null) { return convertToFollowedDTO(user, orderList(followed, order)); }
+
         return convertToFollowedDTO(user,followed);
     }
 
@@ -119,10 +120,10 @@ public class UserServiceImpl implements IUserService {
     }
     private List<User> orderList (List<User> usersList, String order){
         if (order.equals("name_asc")) {
-            usersList.stream().sorted(Comparator
+            return usersList.stream().sorted(Comparator
                     .comparing(User::getUserName)).toList();
         }else if(order.equals("name_desc")){
-            usersList.stream().sorted(Comparator
+            return usersList.stream().sorted(Comparator
                     .comparing(User::getUserName).reversed()).toList();
         }
         return usersList;
@@ -132,6 +133,5 @@ public class UserServiceImpl implements IUserService {
                 .map(user -> new UserDTO(user.getUserId(), user.getUserName()))
                 .collect(Collectors.toList());
     }
-
-
+    
 }
