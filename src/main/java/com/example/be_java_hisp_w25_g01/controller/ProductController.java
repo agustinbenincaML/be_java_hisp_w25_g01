@@ -31,13 +31,14 @@ public class ProductController {
     @GetMapping("/followed/{userId}/list")
     public ResponseEntity<PostsListDTO> listPosts(@PathVariable Integer userId,
                                                   @RequestParam(required = false) String order){
-        PostsListDTO posts = postService.getLastPostsFollowedBy(userId);
-        if ("date_asc".equalsIgnoreCase(order)) {
-            posts.setPostsList(posts.getPostsList().stream().sorted(Comparator.comparing(PostDTO::getDate)).toList());
-        } else if ("date_desc".equalsIgnoreCase(order)) {
-            posts.setPostsList(posts.getPostsList().stream().sorted(Comparator.comparing(PostDTO::getDate).reversed()).toList());
-        }
+
+        PostsListDTO posts = postService.getLastPostsFollowedBy(userId, order);//getLast...(userId, order)
+
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
 }
+
+
+
+

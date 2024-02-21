@@ -11,10 +11,10 @@ import java.util.Optional;
 public interface IPostRepository {
     public List<Post> getAll();
     public Optional<Post> findById(Integer id);
-    public List<Post> findByUser(Integer id);
+    public List<Post> findByUser(Integer userId);
     public void addPost(Post post);
     public Integer generateId();
-
+    List<Post> findAllPostById(List<Integer> postIds);
 
 
 }

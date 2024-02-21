@@ -19,14 +19,4 @@ public class FollowedDTO {
     String user_name;
     List<UserDTO> followed;
 
-    public static FollowedDTO convertToFollowedDTOList(Optional<User> user, List<User> userList) {
-
-        FollowedDTO followedDTO = new FollowedDTO();
-        followedDTO.setUser_id(user.get().getUserId());
-        followedDTO.setUser_name(user.get().getUserName());
-        followedDTO.setFollowed(UserDTO.convertToDTOList(userList));
-
-        return followedDTO;
-
-    }
 }

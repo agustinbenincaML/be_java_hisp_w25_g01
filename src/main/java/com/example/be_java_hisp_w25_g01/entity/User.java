@@ -19,20 +19,6 @@ public class User {
     String userName;
     List<Integer> followed;
     List<Integer> followers;
-    List<Post> posts;
+    List<Integer> posts;
 
-
-    public void addFollowed(Integer userIdToFollow) {
-        if (followed == null) {
-            followed = new ArrayList<>();
-        }
-        followed.add(userIdToFollow);
-    }
-
-    public void addFollowers(Integer userIdToFollow) {
-        if (followers == null) {
-            followers = new ArrayList<>();
-        }
-        followers.add(userIdToFollow);
-    }
 }

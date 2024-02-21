@@ -7,13 +7,14 @@ import java.util.List;
 public interface IUserService {
 
     List<UserDTO> getAll();
-    FollowersDTO getFollowersList(Integer userId);
+    FollowersDTO getFollowersList(Integer userId, String order);
+    FollowedDTO getFollowedList(Integer userId, String order);
     FollowersCountDTO  getFollowersCount(Integer userId);
-    MessagesDTO followUser (Integer UserId,Integer userIdToFollow );
+    MessagesDTO followUser (Integer userId,Integer userIdToFollow );
 
-    MessagesDTO unfollowUser (Integer UserId,Integer userIdToUnfollow );
+    MessagesDTO unfollowUser (Integer userId,Integer userIdToUnfollow );
 
-    FollowedDTO getFollowedList(Integer userId);
+
 
 
 

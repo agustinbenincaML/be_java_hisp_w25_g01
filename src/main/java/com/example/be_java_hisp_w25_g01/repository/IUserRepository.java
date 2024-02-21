@@ -11,7 +11,7 @@ public interface IUserRepository {
 
     List<User> findAll();
 
-    Optional<User> findById(Integer id);
+    Optional<User> findById(Integer userId);
 
     public void followUser(Integer UserId, Integer userIdToFollow);
 

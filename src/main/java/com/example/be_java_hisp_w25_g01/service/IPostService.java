@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 public interface IPostService {
 
 
-    PostsListDTO getLastPostsFollowedBy(Integer userId);
+    PostsListDTO getLastPostsFollowedBy(Integer userId, String order);//+ el parametro order
 
     MessagesDTO followUser (int userId);
 
     MessagesDTO createPost(PostDTO post);
-
-
 }

@@ -22,15 +22,4 @@ public class FollowersDTO {
     String user_name;
     List<UserDTO> followers;
 
-
-    public static FollowersDTO convertToFollowersDTOList(Optional<User> user, List<User> userList) {
-
-        FollowersDTO followersDTO = new FollowersDTO();
-        followersDTO.setUser_id(user.get().getUserId());
-        followersDTO.setUser_name(user.get().getUserName());
-        followersDTO.setFollowers(UserDTO.convertToDTOList(userList));
-
-
-        return followersDTO;
-    }
 }

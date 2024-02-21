@@ -10,19 +10,19 @@ import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.exception.BadRequestException;
 import com.example.be_java_hisp_w25_g01.exception.NotFoundException;
 import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
+import com.example.be_java_hisp_w25_g01.repository.IProductRepository;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
-import com.example.be_java_hisp_w25_g01.repository.impl.PostRepositoryImpl;
 import com.example.be_java_hisp_w25_g01.service.IPostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
+
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class PostServiceImpl implements IPostService {
@@ -31,28 +31,25 @@ public class PostServiceImpl implements IPostService {
     private IPostRepository postRepository;
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    private IProductRepository productRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     @Override
-    public PostsListDTO getLastPostsFollowedBy(Integer userId){
+    public PostsListDTO getLastPostsFollowedBy(Integer userId, String order){
+
         //Buscar usuario sino tirar excepcion
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("No se encontró el usuario con el id " + userId));
 
-        //Lista de ids que sigue el usuario
-        List<Integer> followedList = user.getFollowed();
-
-        //Todos los usuarios
-        List<User> allUsers = userRepository.findAll();
-
         //Todos los usuarios que sigue el user...
-        List<User> usersFollowed = allUsers.stream()
-                .filter(u -> followedList.contains(u.getUserId()))
-                .toList();
+        List<User> usersFollowed = userRepository.findAllByIdIn(user.getFollowed());
 
-        //Todos los posts de los usuarios que sigue por ultimas dos semanas
+        //Todos los posts de los usuarios que sigue
         List<Post> post = usersFollowed.stream()
-                .flatMap(u -> u.getPosts().stream())
+                .flatMap(u -> postRepository.findAllPostById(u.getPosts()).stream())
                 .toList();
 
         LocalDate twoWeeksAgo = LocalDate.now().minusWeeks(2);
@@ -61,8 +58,19 @@ public class PostServiceImpl implements IPostService {
         List<Post> posts = post.stream()
                 .filter(p -> p.getDate().isAfter(twoWeeksAgo))
                 .toList();
+        PostsListDTO postsListDTOS = convertPostListToPostListDTO(posts, userId);
 
-        return convertPostListToPostListDTO(posts, userId);
+        //validar si va ordenado o no
+        if (order != null){
+            if ("date_asc".equalsIgnoreCase(order)) {
+                postsListDTOS.setPostsList(postsListDTOS.getPostsList().stream()
+                        .sorted(Comparator.comparing(PostDTO::getDate)).toList());
+            } else if ("date_desc".equalsIgnoreCase(order)) {
+                postsListDTOS.setPostsList(postsListDTOS.getPostsList().stream()
+                        .sorted(Comparator.comparing(PostDTO::getDate).reversed()).toList());
+            }
+        }
+        return postsListDTOS;
     }
 
     @Override
@@ -72,20 +80,25 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public MessagesDTO createPost(PostDTO postDto){
-        try {
-            if(postDto.getDate().isAfter(LocalDate.now())){
-                throw new BadRequestException("Invalid future date");
-            }
-            Optional<User> userOp = userRepository.findById(postDto.getUser_id());
-            if(!userOp.isPresent()){
-                throw new BadRequestException("User Not Found - ID:"+postDto.getUser_id());
-            }
-            userRepository.createPost(convertPostDtoToPost(postDto));
-            return new MessagesDTO("Post created successfully");
+        if(postDto.getDate().isAfter(LocalDate.now())){
+            throw new BadRequestException("Invalid future date");
         }
-        catch (Exception e){
-            throw new BadRequestException("Error creating Post - "+e.getMessage());
+        Optional<User> userOp = userRepository.findById(postDto.getUser_id());
+        if(userOp.isEmpty()){
+            throw new BadRequestException("User Not Found - ID: "+postDto.getUser_id());
         }
+        Optional<Product> productOp = productRepository.findById(postDto.getProduct().getProduct_id());
+        if(productOp.isEmpty()){
+            throw new BadRequestException("Product Not Found - ID: "+postDto.getProduct().getProduct_id());
+        }
+        Post post = convertPostDtoToPost(postDto);
+        //Post mapperPost = modelMapper.map(postDto, Post.class);
+        //userRepository.createPost(mapperPost);
+        userRepository.createPost(post);
+        //postRepository.addPost(mapperPost);
+        postRepository.addPost(post);
+
+        return new MessagesDTO("Post created successfully");
     }
 
     private Post convertPostDtoToPost(PostDTO p){
@@ -93,7 +106,7 @@ public class PostServiceImpl implements IPostService {
                 postRepository.generateId(),
                 p.getUser_id(),
                 p.getDate(),
-                convertProductDtoToProduct(p.getProduct()),
+                p.getProduct().getProduct_id(),
                 p.getCategory(),
                 p.getPrice()
         );
@@ -122,14 +135,7 @@ public class PostServiceImpl implements IPostService {
         );
     }
     private PostDTO convertPostToPostDto(Post post){
-        ProductDTO productDTO = convertProductToProductDto(post.getProduct());
-        return new PostDTO(
-                post.getUser_id(),
-                post.getDate(),
-                productDTO,
-                post.getCategory(),
-                post.getPrice()
-        );
+        return null;
     }
     private PostsListDTO convertPostListToPostListDTO(List<Post> posts, Integer userId){
         List<PostDTO> listOfDtos = posts.stream().map(this::convertPostToPostDto).toList();

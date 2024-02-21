@@ -15,7 +15,7 @@ public class Post {
     Integer post_id;
     Integer user_id;
     LocalDate date;
-    Product product;
+    Integer product;
     Integer category;
     Double price;
 }

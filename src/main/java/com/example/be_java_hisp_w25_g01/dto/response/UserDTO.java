@@ -13,11 +13,4 @@ import java.util.stream.Collectors;
 public class UserDTO {
     Integer user_id;
     String user_name;
-
-
-    public static List<UserDTO> convertToDTOList(List<User> userList) {
-        return userList.stream()
-                .map(user -> new UserDTO(user.getUserId(), user.getUserName()))
-                .collect(Collectors.toList());
-    }
 }
