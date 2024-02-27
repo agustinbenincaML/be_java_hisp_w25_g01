@@ -12,6 +12,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex){
+        MessagesDTO messagesDTO = new MessagesDTO(ex.getFieldError().getDefaultMessage().toString());
+        return new ResponseEntity<>(messagesDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<?> handleValidationExceptions(HttpMessageNotReadableException ex){
+        MessagesDTO messagesDTO = new MessagesDTO(ex.getMessage());
+        return new ResponseEntity<>(messagesDTO,HttpStatus.BAD_REQUEST);
+    }
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<?> badRequestExceotion(BadRequestException e){
         MessagesDTO exceptionDto = new MessagesDTO(e.getMessage());
