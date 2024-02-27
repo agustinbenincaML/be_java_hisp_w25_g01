@@ -133,5 +133,5 @@ public class UserServiceImpl implements IUserService {
                 .map(user -> new UserDTO(user.getUserId(), user.getUserName()))
                 .collect(Collectors.toList());
     }
-    
+
 }
