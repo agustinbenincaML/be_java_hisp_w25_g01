@@ -20,3 +20,4 @@ public class PostDTO {
     Integer category;
     Double price;
 }
+//asdasd
