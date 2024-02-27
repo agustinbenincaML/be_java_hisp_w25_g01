@@ -7,6 +7,7 @@ import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.entity.Product;
 import com.example.be_java_hisp_w25_g01.service.IPostService;
 import com.example.be_java_hisp_w25_g01.service.impl.PostServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class ProductController {
 
 
     @PostMapping("/post")
-    public ResponseEntity<?> postProduct(@RequestBody PostDTO post){
+    public ResponseEntity<?> postProduct(@Valid  @RequestBody PostDTO post){
         return new ResponseEntity<>(postService.createPost(post), HttpStatus.OK);
     }
 
