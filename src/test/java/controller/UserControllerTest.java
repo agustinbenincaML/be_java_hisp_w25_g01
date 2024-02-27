@@ -53,4 +53,17 @@ public class UserControllerTest {
         Assertions.assertEquals(messegaExpected, result.getBody());
     }
 
+    @Test
+    void unfollowUserTestOk(){
+        //Arrange
+        MessagesDTO messageExpected = new MessagesDTO("User with id: 3 is now unfollowing user with id: 5");
+
+        when(userService.unfollowUser(anyInt(),anyInt())).thenReturn(messageExpected);
+
+        //act
+        ResponseEntity<?> result = userController.unfollowUser(anyInt(),anyInt());
+        //asserts
+        Assertions.assertEquals(messageExpected, result.getBody());
+    }
+
 }
