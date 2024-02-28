@@ -31,6 +31,10 @@ public class UserRepositoryImpl implements IUserRepository {
         loadUserList();
     }
 
+    public UserRepositoryImpl(){
+        loadUserList();
+    }
+
    
 
     private List<User> loadUserList(){
@@ -60,11 +64,11 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
     @Override
-    public void followUser(Integer userId, Integer userIdToFollow) {
-        Optional<User> user = findById(userId);
+    public void followUser(Integer UserId, Integer userIdToFollow) {
+        Optional<User> user = findById(UserId);
         Optional<User> userToFollow = findById(userIdToFollow);
         user.get().getFollowed().add(userIdToFollow);
-        userToFollow.get().getFollowers().add(userId);
+        userToFollow.get().getFollowers().add(UserId);
     }
     @Override
     public void unfollowUser(Integer UserId, Integer userIdToUnfollow) {

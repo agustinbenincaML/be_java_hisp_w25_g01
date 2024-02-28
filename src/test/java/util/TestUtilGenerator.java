@@ -3,22 +3,18 @@ package util;
 import com.example.be_java_hisp_w25_g01.dto.request.PostDTO;
 import com.example.be_java_hisp_w25_g01.dto.request.ProductDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.UserDTO;
-import com.example.be_java_hisp_w25_g01.entity.User;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public class TestUtilGenerator {
 
-    public static UserDTO getUserDTO(){
+    public UserDTO getUserDTO(){
         return new UserDTO(1,"martinMarquez");
     }
-
-    public static User getUser() {return new User(1,"martinMarquez", new ArrayList<>(List.of(5)), new ArrayList<>(List.of()), new ArrayList<>(List.of()));}
 
     public static List<UserDTO> getUserDTOList(){
         UserDTO user1 = new UserDTO(2,"ariJaime");
