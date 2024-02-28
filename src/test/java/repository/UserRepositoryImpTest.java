@@ -6,6 +6,10 @@ import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
 import com.example.be_java_hisp_w25_g01.repository.impl.UserRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import util.TestUtilGenerator;
 
 import java.util.ArrayList;
@@ -13,12 +17,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-
+@ExtendWith(MockitoExtension.class)
 public class UserRepositoryImpTest {
-
 
     IUserRepository userRepository = new UserRepositoryImpl();
 
@@ -32,26 +36,23 @@ public class UserRepositoryImpTest {
     }
 
     @Test
-    void unfollowUserOk(){
+    void unfollowUserOk() {
+        // Arrange
+        User user1 = new User(1,"martinMarquez", new ArrayList<>(List.of(5)), new ArrayList<>(List.of()), new ArrayList<>(List.of()) );
+        User userToUnfollow = new User(5,"leanSaracco", new ArrayList<>(List.of()), new ArrayList<>(List.of(1,2,3,4)),new ArrayList<>(List.of(4,5)));
 
-        TestUtilGenerator util = new TestUtilGenerator();
-        //Arrange
-        User user1 = util.getUser();
-        User user2 = new User(5,"leanSaracco", new ArrayList<>(List.of()), new ArrayList<>(List.of(1,2,3,4)),new ArrayList<>(List.of(4,5)));
+        System.out.println("Antes de unfollowUser:");
+        System.out.println("user1.getFollowed(): " + user1.getFollowed());
+        System.out.println("userToUnfollow.getFollowers(): " + userToUnfollow.getFollowers());
 
-        when(userRepository.findById(user1.getUserId())).thenReturn(Optional.of(user1));
-        when(userRepository.findById(user2.getUserId())).thenReturn(Optional.of(user2));
+        // Act
+        userRepository.unfollowUser(1, 5);
 
-        //act
-        userRepository.unfollowUser(user1.getUserId(), user2.getUserId());
-
-        //assert
-        verify(userRepository).findById(user1.getUserId());
-        verify(userRepository).findById(user2.getUserId());
-
-        verify(user1.getFollowed()).remove(user2.getUserId());
-        verify(user2.getFollowers()).remove(user1.getUserId());
+        // Assert
+        assertFalse(userRepository.findById(user1.getUserId()).get().getFollowed().contains(userToUnfollow.getUserId()));
+        assertFalse(userRepository.findById(userToUnfollow.getUserId()).get().getFollowers().contains(user1.getUserId()));
     }
+
 
     @Test
     void followUserOkTest(){
@@ -62,7 +63,7 @@ public class UserRepositoryImpTest {
 
         User user = userRepository.findById(userId).get(); //preguntar si esta ok llamar al metodo findById
 
-        Assertions.assertTrue(user.getFollowed().contains(userIdToFollow));
+        assertTrue(user.getFollowed().contains(userIdToFollow));
     }
 
 }
