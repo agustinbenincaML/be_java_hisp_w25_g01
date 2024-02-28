@@ -134,7 +134,8 @@ public class PostServiceImpl implements IPostService {
     }
     private PostDTO convertPostToPostDto(Post post){
         ProductDTO productDTO = convertProductToProductDto(productRepository.findById(post.getProduct()).get());
-        return new PostDTO(post.getPost_id(),
+        return new PostDTO(post.getUser_id(),
+                post.getPost_id(),
                 post.getDate(),
                 productDTO,
                 post.getCategory(),
