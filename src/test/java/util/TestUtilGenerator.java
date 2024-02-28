@@ -16,7 +16,7 @@ public class TestUtilGenerator {
         return new UserDTO(1,"martinMarquez");
     }
 
-    public List<UserDTO> getUserDTOList(){
+    public static List<UserDTO> getUserDTOList(){
         UserDTO user1 = new UserDTO(2,"ariJaime");
         UserDTO user2 = new UserDTO(3,"ezeEscobar");
         return new ArrayList<>(List.of(user1, user2));
