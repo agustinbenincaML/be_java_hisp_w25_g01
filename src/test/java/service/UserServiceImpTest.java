@@ -2,6 +2,7 @@ package service;
 
 import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
+import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
 import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.entity.User;
@@ -16,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import util.TestUtilGenerator;
+import util.TestUtilGenerator.*;
 
 import javax.print.attribute.IntegerSyntax;
 
@@ -87,6 +90,18 @@ public class UserServiceImpTest {
 
         Assertions.assertEquals(1, result.getFollowers_count());
 
+    }
+
+
+    @Test
+    void getFollowersList_NotOk(){
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(TestUtilGenerator.getUser()));
+        when(userRepository.findAllByIdIn(List.of())).thenReturn(List.of(TestUtilGenerator.getUser()));
+
+        Assertions.assertThrows(BadRequestException.class, () -> {
+            //Code under test
+            userService.getFollowersList(1,"mal");
+        });
     }
   
   @Test

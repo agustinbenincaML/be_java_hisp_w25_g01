@@ -126,7 +126,7 @@ public class UserServiceImpl implements IUserService {
             return usersList.stream().sorted(Comparator
                     .comparing(User::getUserName).reversed()).toList();
         }
-        throw new BadRequestException("Mal puesto el orden che");
+        throw new BadRequestException("Bad order request.");
         //return usersList;
     }
     private List<UserDTO> convertToDTOList (List<User> userList) {
