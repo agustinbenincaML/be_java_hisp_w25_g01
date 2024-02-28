@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 public class UserRepositoryImpTest {
 
 
-    IUserRepository userRepository;
+    IUserRepository userRepository = new UserRepositoryImpl();
 
     @Test
     void findByIdOK(){
@@ -41,6 +41,7 @@ public class UserRepositoryImpTest {
 
         //assert
     }
+    @Test
     void followUserOkTest(){
         Integer userId = 1;
         Integer userIdToFollow = 4;
