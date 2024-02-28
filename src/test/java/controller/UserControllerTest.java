@@ -26,31 +26,30 @@ public class UserControllerTest {
     @Test
     void followUserOkTest(){
         //Arrange
-        Integer userId = 1;
-        Integer userIdToFollow = 4;
-        MessagesDTO messegaExpected = new MessagesDTO("User with id: 1 is now following user with id: 4");
+        int userId = 1;
+        int userIdToFollow = 4;
+        MessagesDTO messageExpected = new MessagesDTO("User with id: 1 is now following user with id: 4");
 
-        when(userService.followUser(userId, userIdToFollow)).thenReturn(messegaExpected);
+        when(userService.followUser(userId, userIdToFollow)).thenReturn(messageExpected);
 
         //Act
         ResponseEntity<?> result = userController.followUser(userId, userIdToFollow);
 
         //Asert
-        Assertions.assertEquals(messegaExpected, result.getBody());
+        Assertions.assertEquals(messageExpected, result.getBody());
     }
-
     @Test
     void followUserUserNotFoundTest(){
         //Arrange
-        MessagesDTO messegaExpected = new MessagesDTO("User not found.");
+        MessagesDTO messageExpected = new MessagesDTO("User not found.");
 
-        when(userService.followUser(anyInt(), anyInt())).thenReturn(messegaExpected);
+        when(userService.followUser(anyInt(), anyInt())).thenReturn(messageExpected);
 
         //Act
         ResponseEntity<?> result = userController.followUser(anyInt(), anyInt());
 
         //Asert
-        Assertions.assertEquals(messegaExpected, result.getBody());
+        Assertions.assertEquals(messageExpected, result.getBody());
     }
 
 }
