@@ -7,6 +7,7 @@ import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
 import com.example.be_java_hisp_w25_g01.service.IUserService;
+import net.bytebuddy.asm.MemberSubstitution;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,10 +15,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import util.TestUtilGenerator;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -68,6 +69,33 @@ public class UserControllerTest {
         //act
         ResponseEntity<?> result = userController.unfollowUser(anyInt(),anyInt());
         //asserts
+        Assertions.assertEquals(messageExpected, result.getBody());
+    }
+
+    @Test
+    void unfollowUserNotFound(){
+        //Arrange
+        MessagesDTO messagesExpected = new MessagesDTO("User not found.");
+
+        when(userService.unfollowUser(1,6)).thenReturn(messagesExpected);
+
+        //Act
+        ResponseEntity<?> result = userController.unfollowUser(1, 6);
+        //Assert
+        Assertions.assertEquals(messagesExpected, result.getBody());
+    }
+
+    @Test
+    void unfollowUserAlreadyFollowing(){
+        //Arrange
+        MessagesDTO messageExpected = new MessagesDTO("User is already following this user.");
+
+        when(userService.unfollowUser(1,5)).thenReturn(messageExpected);
+
+        //Act
+        ResponseEntity<?> result = userController.unfollowUser(1,5);
+
+        //Assert
         Assertions.assertEquals(messageExpected, result.getBody());
     }
 
