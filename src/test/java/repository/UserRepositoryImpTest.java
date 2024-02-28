@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class UserRepositoryImpTest {
 
 
-    IUserRepository userRepository;
+    IUserRepository userRepository = new UserRepositoryImpl();
 
     @Test
     void findByIdOK(){
@@ -52,6 +52,8 @@ public class UserRepositoryImpTest {
         verify(user1.getFollowed()).remove(user2.getUserId());
         verify(user2.getFollowers()).remove(user1.getUserId());
     }
+
+    @Test
     void followUserOkTest(){
         Integer userId = 1;
         Integer userIdToFollow = 4;
