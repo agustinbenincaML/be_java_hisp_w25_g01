@@ -22,12 +22,9 @@ import java.util.stream.Collectors;
 @Repository
 public class PostRepositoryImpl implements IPostRepository {
 
-    //IProductRepository productRepository;
 
     private List<Post> listOfPost;
-    @Autowired
-    public PostRepositoryImpl(IProductRepository productRepository){
-        //this.productRepository = productRepository;
+    public PostRepositoryImpl(){
         loadPost();
     }
     private void loadPost(){

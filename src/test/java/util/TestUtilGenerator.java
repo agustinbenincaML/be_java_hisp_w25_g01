@@ -33,6 +33,6 @@ public class TestUtilGenerator {
         product.setType("Gamer");
         product.setBrand("Racer");
 
-        return new PostDTO(1, LocalDate.of(2024,01,02), product, 100, 1500.50);
+        return new PostDTO(1, 1,LocalDate.of(2024,01,02), product, 100, 1500.50);
     }
 }

@@ -17,17 +17,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserRepositoryImpTest {
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
     IUserRepository userRepository = new UserRepositoryImpl();
 
     @Test
@@ -36,7 +31,7 @@ public class UserRepositoryImpTest {
 
         User user = userRepository.findById(id).get();
 
-        Assertions.assertEquals("martinMarquez", user.getUserName());
+        assertEquals("martinMarquez", user.getUserName());
     }
 
     @Test
@@ -56,11 +51,7 @@ public class UserRepositoryImpTest {
         assertFalse(userRepository.findById(user1.getUserId()).get().getFollowed().contains(userToUnfollow.getUserId()));
         assertFalse(userRepository.findById(userToUnfollow.getUserId()).get().getFollowers().contains(user1.getUserId()));
     }
-<<<<<<< HEAD
-=======
 
-
->>>>>>> main
     @Test
     void followUserOkTest(){
         Integer userId = 1;
@@ -71,6 +62,17 @@ public class UserRepositoryImpTest {
         User user = userRepository.findById(userId).get(); //preguntar si esta ok llamar al metodo findById
 
         assertTrue(user.getFollowed().contains(userIdToFollow));
+    }
+
+
+    @Test
+    void findAllByIdIn(){
+        List<Integer> useIds = List.of(1);
+
+        List<User> users = userRepository.findAllByIdIn(useIds);
+
+        assertEquals("martinMarquez", users.get(0).getUserName());
+
     }
 
 }
