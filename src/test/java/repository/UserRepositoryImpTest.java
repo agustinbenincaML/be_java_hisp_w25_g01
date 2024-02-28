@@ -66,4 +66,17 @@ public class UserRepositoryImpTest {
         assertTrue(user.getFollowed().contains(userIdToFollow));
     }
 
+    @Test
+    void findByIdInOK(){
+        //Arrange
+        List<Integer> idList = List.of(1,2);
+
+        //Act
+        List<User> currentUsers = userRepository.findAllByIdIn(idList);
+
+        //Assert
+        Assertions.assertEquals("martinMarquez", currentUsers.get(0).getUserName());
+        Assertions.assertEquals("ariJaime", currentUsers.get(1).getUserName());
+    }
+
 }
