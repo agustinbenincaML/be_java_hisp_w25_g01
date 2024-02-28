@@ -23,18 +23,13 @@ public class UserRepositoryImpl implements IUserRepository {
 
     //IPostRepository postRepository;
 
-
     private List<User> userList;
-    @Autowired
-    public UserRepositoryImpl(IPostRepository postRepository){
-        loadUserList();
-    }
-
     public UserRepositoryImpl(){
         loadUserList();
     }
 
-   
+
+
 
     private List<User> loadUserList(){
         userList = new ArrayList<>();
