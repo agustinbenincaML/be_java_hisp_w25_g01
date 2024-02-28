@@ -67,4 +67,5 @@ public class UserControllerTest {
         Assertions.assertEquals(followersCountDTO.getFollowers_count(), result.getBody().getFollowers_count());
 
     }
+
 }
