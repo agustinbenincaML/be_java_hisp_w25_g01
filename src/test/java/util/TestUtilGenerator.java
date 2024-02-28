@@ -3,6 +3,7 @@ package util;
 import com.example.be_java_hisp_w25_g01.dto.request.PostDTO;
 import com.example.be_java_hisp_w25_g01.dto.request.ProductDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.UserDTO;
+import com.example.be_java_hisp_w25_g01.entity.User;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import java.time.LocalDate;
@@ -15,6 +16,11 @@ public class TestUtilGenerator {
     public UserDTO getUserDTO(){
         return new UserDTO(1,"martinMarquez");
     }
+    public User getUser(){
+        return  new User(1,"martinMarquez", new ArrayList<>(List.of(5)), new ArrayList<>(List.of()), new ArrayList<>(List.of()));
+
+    }
+
 
     public List<UserDTO> getUserDTOList(){
         UserDTO user1 = new UserDTO(2,"ariJaime");
