@@ -44,13 +44,13 @@ public class TestUtilGenerator {
         product.setType("Gamer");
         product.setBrand("Racer");
 
-        return new PostDTO(1, LocalDate.of(2024,01,02), product, 100, 1500.50);
+        return new PostDTO(1, 1,LocalDate.of(2024,01,02), product, 100, 1500.50);
     }
 
 
     public static PostsListDTO getPostListDTO(){
-        PostDTO post1 = new PostDTO(2, LocalDate.of(2024, Month.FEBRUARY,26),new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 100, 1500.00);
-        PostDTO post2 = new PostDTO(2, LocalDate.of(2024, Month.FEBRUARY,20),  new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 120, 2800.69);
+        PostDTO post1 = new PostDTO(2, 1, LocalDate.of(2024, Month.FEBRUARY,26),new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 100, 1500.00);
+        PostDTO post2 = new PostDTO(2, 1, LocalDate.of(2024, Month.FEBRUARY,20),  new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 120, 2800.69);
 
        return new PostsListDTO(1, List.of(post1,post2));
     }
