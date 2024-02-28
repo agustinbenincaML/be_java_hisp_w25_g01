@@ -83,7 +83,7 @@ public class PostServiceImpTest {
     void getLastPostsFollowedByBadRequestTest(){
         //Arrange
         String order = "order_invalid";
-        String messageExpected = "Mal orden.";
+        String messageExpected = "Bad order request.";
         User user = TestUtilGenerator.getUser();
 
         when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
