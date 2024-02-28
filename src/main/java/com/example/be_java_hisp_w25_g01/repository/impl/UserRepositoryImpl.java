@@ -23,7 +23,6 @@ public class UserRepositoryImpl implements IUserRepository {
 
     //IPostRepository postRepository;
 
-
     private List<User> userList;
     @Autowired
     public UserRepositoryImpl(IPostRepository postRepository){
@@ -31,7 +30,8 @@ public class UserRepositoryImpl implements IUserRepository {
         loadUserList();
     }
 
-   
+
+
 
     private List<User> loadUserList(){
         userList = new ArrayList<>();
