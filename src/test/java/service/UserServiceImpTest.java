@@ -103,7 +103,19 @@ public class UserServiceImpTest {
          MessagesDTO result = userService.unfollowUser(user1.getUserId(),user2.getUserId());
         //assertions
         Assertions.assertEquals(result, messageSpected);
+    }
+    @Test
+    void unfollowUserBadRequest(){
+        Integer userId = 1;
+        Integer userIdToFollow = 2;
 
+        User user = new User(userId, "user_1", List.of(), List.of(), List.of());
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(userRepository.findById(userIdToFollow)).thenReturn(Optional.empty());
+
+        //Act & Assert
+        Assertions.assertThrows(BadRequestException.class, () -> userService.unfollowUser(userId, userIdToFollow));
     }
 
     @Test
