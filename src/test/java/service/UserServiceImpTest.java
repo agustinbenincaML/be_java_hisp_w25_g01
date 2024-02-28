@@ -1,5 +1,6 @@
 package service;
 
+import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
@@ -58,4 +59,44 @@ public class UserServiceImpTest {
             userService.getFollowersList(1,"mal");
         });
     }
+
+
+    @Test
+    void getFollowedListAscOK(){
+        User user = new User(2, "ariJaime", List.of(4,5), List.of(), List.of());
+        List<User> followeds = List.of(new User(4,"sofiaMaria",List.of(),List.of(2),List.of()),
+                new User(5,"leanSaracco",List.of(),List.of(2),List.of()));
+
+        when(userRepository.findById(2)).thenReturn(Optional.of(user));
+        when(userRepository.findAllByIdIn(List.of(4,5))).thenReturn(followeds);
+
+        FollowedDTO result = userService.getFollowedList(2, "name_asc");
+
+        Assertions.assertEquals(2,result.getUser_id());
+        Assertions.assertEquals("ariJaime",result.getUser_name());
+        Assertions.assertEquals(2,result.getFollowed().size());
+        Assertions.assertEquals("leanSaracco",result.getFollowed().get(0).getUser_name());
+        Assertions.assertEquals("sofiaMaria",result.getFollowed().get(1).getUser_name());
+
+    }
+
+    @Test
+    void getFollowedListDescOK(){
+        User user = new User(2, "ariJaime", List.of(4,5), List.of(), List.of());
+        List<User> followeds = List.of(new User(4,"sofiaMaria",List.of(),List.of(2),List.of()),
+                new User(5,"leanSaracco",List.of(),List.of(2),List.of()));
+
+        when(userRepository.findById(2)).thenReturn(Optional.of(user));
+        when(userRepository.findAllByIdIn(List.of(4,5))).thenReturn(followeds);
+
+        FollowedDTO result = userService.getFollowedList(2, "name_desc");
+
+        Assertions.assertEquals(2,result.getUser_id());
+        Assertions.assertEquals("ariJaime",result.getUser_name());
+        Assertions.assertEquals(2,result.getFollowed().size());
+        Assertions.assertEquals("sofiaMaria",result.getFollowed().get(0).getUser_name());
+        Assertions.assertEquals("leanSaracco",result.getFollowed().get(1).getUser_name());
+
+    }
+
 }
