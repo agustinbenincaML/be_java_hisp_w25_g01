@@ -10,19 +10,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class TestUtilGenerator {
 
-    public UserDTO getUserDTO(){
+    public static UserDTO getUserDTO(){
         return new UserDTO(1,"martinMarquez");
     }
-    public User getUser(){
-        return  new User(1,"martinMarquez", new ArrayList<>(List.of(5)), new ArrayList<>(List.of()), new ArrayList<>(List.of()));
 
-    }
+    public static User getUser() {return new User(1,"martinMarquez", new ArrayList<>(List.of(5)), new ArrayList<>(List.of()), new ArrayList<>(List.of()));}
 
-
-    public List<UserDTO> getUserDTOList(){
+    public static List<UserDTO> getUserDTOList(){
         UserDTO user1 = new UserDTO(2,"ariJaime");
         UserDTO user2 = new UserDTO(3,"ezeEscobar");
         return new ArrayList<>(List.of(user1, user2));
