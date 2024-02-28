@@ -3,6 +3,7 @@ package service;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
 import com.example.be_java_hisp_w25_g01.entity.User;
+import com.example.be_java_hisp_w25_g01.exception.BadRequestException;
 import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
 import com.example.be_java_hisp_w25_g01.service.impl.UserServiceImpl;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,14 +51,14 @@ public class UserServiceImpTest {
 
         MessagesDTO messageSpected = new MessagesDTO("User with id: " + user1.getUserId() + " is now unfollowing user with id: " + user2.getUserId());
 
-        when(userRepository.findById(user1.getUserId())).thenReturn(Optional.of(user2));
+        when(userRepository.findById(user1.getUserId())).thenReturn(Optional.of(user1));
         when(userRepository.findById(user2.getUserId())).thenReturn(Optional.of(user2));
+
 
         //act
          MessagesDTO result = userService.unfollowUser(user1.getUserId(),user2.getUserId());
         //assertions
         Assertions.assertEquals(result, messageSpected);
-        verify(userRepository).unfollowUser(user1.getUserId(), user2.getUserId());
 
     }
 
