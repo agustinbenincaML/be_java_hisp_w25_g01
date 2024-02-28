@@ -19,8 +19,7 @@ import util.TestUtilGenerator;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import util.TestUtilGenerator;
 import util.TestUtilGenerator.*;
@@ -32,7 +31,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImpTest {
@@ -130,8 +129,48 @@ public class UserServiceImpTest {
         });
     }
 
+    @Test
+    void getFollowedList_NotOk(){
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(TestUtilGenerator.getUser()));
+        when(userRepository.findAllByIdIn(List.of())).thenReturn(List.of(TestUtilGenerator.getUser()));
+
+        Assertions.assertThrows(BadRequestException.class, () -> {
+            //Code under test
+            userService.getFollowersList(1,"mal");
+        });
+    }
 
     @Test
+    void getFollowersList_Ok(){
+        //arrange
+        UserDTO user = TestUtilGenerator.getUserDTO();
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(TestUtilGenerator.getUser()));
+        when(userRepository.findAllByIdIn(List.of())).thenReturn(List.of(TestUtilGenerator.getUser()));
+
+        //act
+        FollowersDTO result = userService.getFollowersList(1,"name_asc");
+
+        //assertion
+        Assertions.assertEquals(user.getUser_id(), result.getUser_id());
+        Assertions.assertEquals(user.getUser_name(), result.getUser_name());
+    }
+
+    @Test
+    void getFollowedList_Ok(){
+        //arrange
+        UserDTO user = TestUtilGenerator.getUserDTO();
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(TestUtilGenerator.getUser()));
+        when(userRepository.findAllByIdIn(List.of(5))).thenReturn(List.of(TestUtilGenerator.getUser()));
+
+        //act
+        FollowedDTO result = userService.getFollowedList(1,"name_asc");
+
+        //assertion
+        Assertions.assertEquals(user.getUser_id(), result.getUser_id());
+        Assertions.assertEquals(user.getUser_name(), result.getUser_name());
+    }
+
+  @Test
     void getFollowedListAscOK(){
         User user = new User(2, "ariJaime", List.of(4,5), List.of(), List.of());
         List<User> followeds = List.of(new User(4,"sofiaMaria",List.of(),List.of(2),List.of()),
