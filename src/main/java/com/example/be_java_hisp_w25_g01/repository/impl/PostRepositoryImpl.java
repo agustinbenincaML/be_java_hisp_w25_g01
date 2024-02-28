@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Repository
 public class PostRepositoryImpl implements IPostRepository {
 
-
     private List<Post> listOfPost;
     public PostRepositoryImpl(){
         loadPost();

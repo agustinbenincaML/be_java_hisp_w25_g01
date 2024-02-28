@@ -65,14 +65,27 @@ public class UserRepositoryImpTest {
     }
 
 
+
     @Test
-    void findAllByIdIn(){
+    void findAllByIdIn() {
         List<Integer> useIds = List.of(1);
 
         List<User> users = userRepository.findAllByIdIn(useIds);
 
         assertEquals("martinMarquez", users.get(0).getUserName());
 
+    }
+    @Test
+    void findByIdInOK(){
+        //Arrange
+        List<Integer> idList = List.of(1,2);
+
+        //Act
+        List<User> currentUsers = userRepository.findAllByIdIn(idList);
+
+        //Assert
+        Assertions.assertEquals("martinMarquez", currentUsers.get(0).getUserName());
+        Assertions.assertEquals("ariJaime", currentUsers.get(1).getUserName());
     }
 
 }

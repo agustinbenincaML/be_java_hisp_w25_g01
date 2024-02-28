@@ -71,4 +71,18 @@ public class UserControllerTest {
         Assertions.assertEquals(messageExpected, result.getBody());
     }
 
+    //T-0004
+    @Test
+    void getFollowedSellersOK(){
+        FollowedDTO followedDTO = new FollowedDTO(1,"martinMarquez", TestUtilGenerator.getUserDTOList());
+
+        when(userService.getFollowedList(anyInt(), anyString())).thenReturn(followedDTO);
+
+        ResponseEntity<FollowedDTO> result = userController.getFollowedSellers(anyInt(), anyString());
+
+        Assertions.assertEquals(followedDTO, result.getBody());
+
+
+    }
+
 }
