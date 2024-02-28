@@ -1,5 +1,6 @@
 package service;
 
+import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
@@ -18,6 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,6 +57,17 @@ public class UserServiceImpTest {
         //assertions
         Assertions.assertEquals(result, messageSpected);
         verify(userRepository).unfollowUser(user1.getUserId(), user2.getUserId());
+
+    }
+
+    @Test
+    void getFollowersCountOK(){
+        User user = new User(1, "user_1", List.of(), List.of(2), List.of());
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
+
+        FollowersCountDTO result = userService.getFollowersCount(anyInt());
+
+        Assertions.assertEquals(1, result.getFollowers_count());
 
     }
 }

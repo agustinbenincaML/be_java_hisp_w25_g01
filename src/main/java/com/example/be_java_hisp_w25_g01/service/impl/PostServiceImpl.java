@@ -69,6 +69,7 @@ public class PostServiceImpl implements IPostService {
                 postsListDTOS.setPostsList(postsListDTOS.getPostsList().stream()
                         .sorted(Comparator.comparing(PostDTO::getDate).reversed()).toList());
             }
+            else {throw new BadRequestException("Mal orden.");}
         }
         return postsListDTOS;
     }
