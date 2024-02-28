@@ -42,22 +42,4 @@ public class ProductControllerTest {
         //Assert
         Assertions.assertEquals(expectedStatus, result.getStatusCode());
     }
-
-//    @Test
-//    void getFollowedSellersDateOrderBadRequest(){
-//        //Arrange
-//        String order = "invalid";
-//        MessagesDTO expectedMessage = new MessagesDTO("Mal orden.");
-//        HttpStatus expectedStatus = HttpStatus.BAD_REQUEST;
-//
-//        when(postService.getLastPostsFollowedBy(anyInt(), order)).thenReturn();
-//
-//        //Act
-//        ResponseEntity<?> result = productController.listPosts(expectedPosts.getUser_id(), order);
-//
-//        //Assert
-//        Assertions.assertEquals(expectedStatus, result.getStatusCode());
-//    }
-
-
 }
