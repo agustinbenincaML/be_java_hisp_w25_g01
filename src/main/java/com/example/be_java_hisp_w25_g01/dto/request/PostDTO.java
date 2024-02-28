@@ -21,6 +21,8 @@ public class PostDTO {
     @Positive(message = "El id debe ser mayor a cero")
     Integer user_id;
 
+    Integer post_id;
+
     @NotNull(message = "La fecha no puede estar vacía.")
     @JsonFormat(pattern="dd-MM-yyyy")
     LocalDate date;

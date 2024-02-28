@@ -23,14 +23,14 @@ public class UserRepositoryImpl implements IUserRepository {
 
     //IPostRepository postRepository;
 
-
     private List<User> userList;
     public UserRepositoryImpl(){
         //this.postRepository = postRepository;
         loadUserList();
     }
 
-   
+
+
 
     private List<User> loadUserList(){
         userList = new ArrayList<>();
