@@ -64,11 +64,11 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
     @Override
-    public void followUser(Integer UserId, Integer userIdToFollow) {
-        Optional<User> user = findById(UserId);
+    public void followUser(Integer userId, Integer userIdToFollow) {
+        Optional<User> user = findById(userId);
         Optional<User> userToFollow = findById(userIdToFollow);
         user.get().getFollowed().add(userIdToFollow);
-        userToFollow.get().getFollowers().add(UserId);
+        userToFollow.get().getFollowers().add(userId);
     }
     @Override
     public void unfollowUser(Integer UserId, Integer userIdToUnfollow) {
