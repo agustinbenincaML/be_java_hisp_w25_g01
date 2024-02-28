@@ -7,6 +7,8 @@ import com.example.be_java_hisp_w25_g01.repository.impl.UserRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.mockito.Mockito.verify;
+
 
 public class UserRepositoryImpTest {
 
@@ -20,4 +22,17 @@ public class UserRepositoryImpTest {
 
         Assertions.assertEquals("martinMarquez", user.getUserName());
     }
+
+    @Test
+    void followUserOkTest(){
+        Integer userId = 1;
+        Integer userIdToFollow = 4;
+
+        userRepository.followUser(userId, userIdToFollow);
+
+        User user = userRepository.findById(userId).get(); //preguntar si esta ok llamar al metodo findById
+
+        Assertions.assertTrue(user.getFollowed().contains(userIdToFollow));
+    }
+
 }
