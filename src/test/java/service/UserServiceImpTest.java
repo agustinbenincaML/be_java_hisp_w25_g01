@@ -1,10 +1,7 @@
 package service;
 
-import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
+import com.example.be_java_hisp_w25_g01.dto.response.*;
 
-import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.exception.BadRequestException;
@@ -19,9 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import util.TestUtilGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
@@ -134,8 +129,9 @@ public class UserServiceImpTest {
             userService.getFollowersList(1,"mal");
         });
     }
-  
-  @Test
+
+
+    @Test
     void getFollowedListAscOK(){
         User user = new User(2, "ariJaime", List.of(4,5), List.of(), List.of());
         List<User> followeds = List.of(new User(4,"sofiaMaria",List.of(),List.of(2),List.of()),
@@ -172,4 +168,61 @@ public class UserServiceImpTest {
         Assertions.assertEquals("leanSaracco",result.getFollowed().get(1).getUser_name());
 
     }
+
+    @Test
+    void getFollowersListAscOk() {
+        User user = new User(4, "sofiaMaria", List.of(), List.of(2, 3), List.of());
+        List<User> followers = List.of(new User(2, "ariJaime", List.of(4), List.of(), List.of()),
+                new User(3, "ezeEscobar", List.of(4), List.of(), List.of()));
+        when(userRepository.findById(4)).thenReturn(Optional.of(user));
+        when(userRepository.findAllByIdIn(List.of(2, 3))).thenReturn(followers);
+
+
+        FollowersDTO expectedResult = FollowersDTO.builder()
+                .user_id(4)
+                .user_name("sofiaMaria")
+                .followers(Arrays.asList(
+                        UserDTO.builder().user_id(2).user_name("ariJaime").build(),
+                        UserDTO.builder().user_id(3).user_name("ezeEscobar").build()
+                ))
+                .build();
+
+        FollowersDTO result = userService.getFollowersList(4, "name_asc");
+
+
+
+        // Assert
+        Assertions.assertEquals(expectedResult, result);
+
+    }
+
+    @Test
+    void getFollowersListDescOk() {
+        User user = new User(4, "sofiaMaria", List.of(), List.of(2, 3), List.of());
+        List<User> followers = List.of(new User(2, "ariJaime", List.of(4), List.of(), List.of()),
+                new User(3, "ezeEscobar", List.of(4), List.of(), List.of()));
+        when(userRepository.findById(4)).thenReturn(Optional.of(user));
+        when(userRepository.findAllByIdIn(List.of(2, 3))).thenReturn(followers);
+
+
+        FollowersDTO expectedResult = FollowersDTO.builder()
+                .user_id(4)
+                .user_name("sofiaMaria")
+                .followers(Arrays.asList(
+                        UserDTO.builder().user_id(3).user_name("ezeEscobar").build(),
+                        UserDTO.builder().user_id(2).user_name("ariJaime").build()
+                ))
+                .build();
+
+        FollowersDTO result = userService.getFollowersList(4, "name_desc");
+
+
+
+        // Assert
+        Assertions.assertEquals(expectedResult, result);
+
+    }
+
+
+
 }
