@@ -1,6 +1,7 @@
 package controller;
 
 import com.example.be_java_hisp_w25_g01.controller.UserController;
+
 import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
@@ -15,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import util.TestUtilGenerator;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,17 +57,17 @@ public class UserControllerTest {
         Assertions.assertEquals(messageExpected, result.getBody());
     }
 
-    //T-0007
     @Test
-    void getFollowersCountOK(){
-        FollowersCountDTO followersCountDTO = new FollowersCountDTO(1, "user_1", 10L);
+    void unfollowUserTestOk(){
+        //Arrange
+        MessagesDTO messageExpected = new MessagesDTO("User with id: 3 is now unfollowing user with id: 5");
 
-        when(userService.getFollowersCount(anyInt())).thenReturn(followersCountDTO);
+        when(userService.unfollowUser(anyInt(),anyInt())).thenReturn(messageExpected);
 
-        ResponseEntity<FollowersCountDTO> result = (ResponseEntity<FollowersCountDTO>) userController.getFollowersCount(anyInt());
-
-        Assertions.assertEquals(followersCountDTO.getFollowers_count(), result.getBody().getFollowers_count());
-
+        //act
+        ResponseEntity<?> result = userController.unfollowUser(anyInt(),anyInt());
+        //asserts
+        Assertions.assertEquals(messageExpected, result.getBody());
     }
 
     //T-0004

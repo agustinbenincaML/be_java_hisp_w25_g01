@@ -2,8 +2,9 @@ package service;
 
 import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
+
+import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.exception.BadRequestException;
@@ -16,6 +17,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import util.TestUtilGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import util.TestUtilGenerator;
 import util.TestUtilGenerator.*;
@@ -80,6 +90,27 @@ public class UserServiceImpTest {
         Assertions.assertThrows(BadRequestException.class, () -> userService.followUser(userId, userIdToFollow));
     }
 
+
+    @Test
+    void unfollowUserOk() {
+        TestUtilGenerator utilGenerator = new TestUtilGenerator();
+
+        //arrange
+        User user1 = utilGenerator.getUser();
+        User user2 = new User(5,"leanSaracco", new ArrayList<>(List.of()), new ArrayList<>(List.of(1,2,3,4)),new ArrayList<>(List.of(4,5)));
+
+        MessagesDTO messageSpected = new MessagesDTO("User with id: " + user1.getUserId() + " is now unfollowing user with id: " + user2.getUserId());
+
+        when(userRepository.findById(user1.getUserId())).thenReturn(Optional.of(user1));
+        when(userRepository.findById(user2.getUserId())).thenReturn(Optional.of(user2));
+
+
+        //act
+         MessagesDTO result = userService.unfollowUser(user1.getUserId(),user2.getUserId());
+        //assertions
+        Assertions.assertEquals(result, messageSpected);
+
+    }
 
     @Test
     void getFollowersCountOK(){

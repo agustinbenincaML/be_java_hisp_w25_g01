@@ -31,10 +31,6 @@ public class UserRepositoryImpl implements IUserRepository {
         loadUserList();
     }
 
-    public UserRepositoryImpl(){
-        loadUserList();
-    }
-
    
 
     private List<User> loadUserList(){
