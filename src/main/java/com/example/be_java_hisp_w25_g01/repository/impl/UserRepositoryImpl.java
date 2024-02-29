@@ -1,14 +1,8 @@
 package com.example.be_java_hisp_w25_g01.repository.impl;
 
-import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
 import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.entity.User;
-import com.example.be_java_hisp_w25_g01.exception.NotFoundException;
-import com.example.be_java_hisp_w25_g01.exception.BadRequestException;
-import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -21,11 +15,9 @@ import java.util.stream.Collectors;
 @Repository
 public class UserRepositoryImpl implements IUserRepository {
 
-    //IPostRepository postRepository;
 
     private List<User> userList;
     public UserRepositoryImpl(){
-        //this.postRepository = postRepository;
         loadUserList();
     }
 

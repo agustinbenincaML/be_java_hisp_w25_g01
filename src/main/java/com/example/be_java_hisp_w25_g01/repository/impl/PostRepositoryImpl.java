@@ -1,15 +1,7 @@
 package com.example.be_java_hisp_w25_g01.repository.impl;
 
 import com.example.be_java_hisp_w25_g01.entity.Post;
-import com.example.be_java_hisp_w25_g01.entity.Product;
-import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
-import com.example.be_java_hisp_w25_g01.repository.IProductRepository;
-import com.example.be_java_hisp_w25_g01.service.impl.PostServiceImpl;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

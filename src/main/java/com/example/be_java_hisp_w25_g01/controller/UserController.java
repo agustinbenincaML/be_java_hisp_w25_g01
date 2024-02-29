@@ -2,17 +2,11 @@ package com.example.be_java_hisp_w25_g01.controller;
 
 import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.UserDTO;
-import com.example.be_java_hisp_w25_g01.entity.User;
-import com.example.be_java_hisp_w25_g01.repository.impl.UserRepositoryImpl;
 import com.example.be_java_hisp_w25_g01.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.lang.reflect.Type;
-import java.util.*;
 
 @RestController
 @RequestMapping("/users")
