@@ -32,9 +32,6 @@ public class UserRepositoryImpTest {
         User user1 = new User(1,"martinMarquez", new ArrayList<>(List.of(5)), new ArrayList<>(List.of()), new ArrayList<>(List.of()) );
         User userToUnfollow = new User(5,"leanSaracco", new ArrayList<>(List.of()), new ArrayList<>(List.of(1,2,3,4)),new ArrayList<>(List.of(4,5)));
 
-        System.out.println("Antes de unfollowUser:");
-        System.out.println("user1.getFollowed(): " + user1.getFollowed());
-        System.out.println("userToUnfollow.getFollowers(): " + userToUnfollow.getFollowers());
 
         // Act
         userRepository.unfollowUser(1, 5);
