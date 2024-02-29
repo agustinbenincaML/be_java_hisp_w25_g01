@@ -3,8 +3,6 @@ package controller;
 import com.example.be_java_hisp_w25_g01.controller.UserController;
 
 import com.example.be_java_hisp_w25_g01.dto.response.FollowedDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.FollowersCountDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.FollowersDTO;
 import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
 import com.example.be_java_hisp_w25_g01.service.IUserService;
 import org.junit.jupiter.api.Assertions;

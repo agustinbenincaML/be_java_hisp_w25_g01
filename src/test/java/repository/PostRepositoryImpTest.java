@@ -1,11 +1,8 @@
 package repository;
 
 import com.example.be_java_hisp_w25_g01.entity.Post;
-import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
-import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
 import com.example.be_java_hisp_w25_g01.repository.impl.PostRepositoryImpl;
-import com.example.be_java_hisp_w25_g01.repository.impl.UserRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
