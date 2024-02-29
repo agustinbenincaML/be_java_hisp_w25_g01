@@ -57,6 +57,7 @@ public class UserControllerTest {
         Assertions.assertEquals(messageExpected, result.getBody());
     }
 
+    //T-002
     @Test
     void unfollowUserTestOk(){
         //Arrange
@@ -70,6 +71,7 @@ public class UserControllerTest {
         Assertions.assertEquals(messageExpected, result.getBody());
     }
 
+    //T-002
     @Test
     void unfollowUserNotFound(){
         //Arrange
@@ -83,6 +85,7 @@ public class UserControllerTest {
         Assertions.assertEquals(messagesExpected, result.getBody());
     }
 
+    //T-002
     @Test
     void unfollowUserAlreadyFollowing(){
         //Arrange

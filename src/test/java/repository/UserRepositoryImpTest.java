@@ -6,9 +6,11 @@ import com.example.be_java_hisp_w25_g01.repository.impl.UserRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import util.TestUtilGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,6 +28,7 @@ public class UserRepositoryImpTest {
         assertEquals("martinMarquez", user.getUserName());
     }
 
+    //T-002
     @Test
     void unfollowUserOk() {
         // Arrange
