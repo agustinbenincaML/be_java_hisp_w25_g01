@@ -298,6 +298,25 @@ public class UserServiceImpTest {
         Assertions.assertEquals(expectedResult, result);
     }
 
+    @Test
+    void getFollowedListOrderNull(){
+        User user = new User(2, "ariJaime", List.of(4,5), List.of(), List.of());
+        List<User> followeds = List.of(new User(4,"sofiaMaria",List.of(),List.of(2),List.of()),
+                new User(5,"leanSaracco",List.of(),List.of(2),List.of()));
+
+        when(userRepository.findById(2)).thenReturn(Optional.of(user));
+        when(userRepository.findAllByIdIn(List.of(4,5))).thenReturn(followeds);
+
+        FollowedDTO result = userService.getFollowedList(2, null);
+
+        Assertions.assertEquals(2,result.getUser_id());
+        Assertions.assertEquals("ariJaime",result.getUser_name());
+        Assertions.assertEquals(2,result.getFollowed().size());
+        Assertions.assertEquals("sofiaMaria",result.getFollowed().get(0).getUser_name());
+        Assertions.assertEquals("leanSaracco",result.getFollowed().get(1).getUser_name());
+
+    }
+
 
 
 }
