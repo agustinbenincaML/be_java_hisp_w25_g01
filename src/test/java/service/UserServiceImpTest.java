@@ -277,11 +277,11 @@ public class UserServiceImpTest {
     @Test
     void getFollowersListOrderNull() {
         User user = new User(4, "sofiaMaria", List.of(), List.of(2, 3), List.of());
-        List<User> followers = List.of(new User(2, "ariJaime", List.of(4), List.of(), List.of()),
-                new User(3, "ezeEscobar", List.of(4), List.of(), List.of()));
+        List<User> followers = List.of(new User(3, "ezeEscobar", List.of(4), List.of(), List.of()),
+                new User(2, "ariJaime", List.of(4), List.of(), List.of()));
+
         when(userRepository.findById(4)).thenReturn(Optional.of(user));
         when(userRepository.findAllByIdIn(List.of(2, 3))).thenReturn(followers);
-
 
         FollowersDTO expectedResult = FollowersDTO.builder()
                 .user_id(4)
@@ -294,11 +294,8 @@ public class UserServiceImpTest {
 
         FollowersDTO result = userService.getFollowersList(4, null);
 
-
-
         // Assert
         Assertions.assertEquals(expectedResult, result);
-
     }
 
 
