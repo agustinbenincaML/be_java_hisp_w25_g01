@@ -27,17 +27,14 @@ import util.TestUtilGenerator;
 import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -133,6 +130,34 @@ public class PostServiceImpTest {
         List<Integer> actualIntegers = postsListDTO.getPostsList().stream().map(PostDTO::getPost_id).toList();
         assertEquals(expectedIntegers, actualIntegers);
     }
+
+    @Test
+    void getLastPostFollowedByDateTwoWeeksTest(){
+        //Arrange
+
+        PostsListDTO expectedPosts = TestUtilGenerator.getPostListDTO();
+        User user = TestUtilGenerator.getUser();
+
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
+        when(userRepository.findAllByIdIn(user.getFollowed())).thenReturn(TestUtilGenerator.getUserList());
+        when(postRepository.findAllPostById(List.of())).thenReturn(TestUtilGenerator.getPostList());
+        when(productRepository.findById(anyInt())).thenReturn(Optional.of(TestUtilGenerator.getProduct()));
+
+        //Act
+        PostsListDTO currentPosts = postService.getLastPostsFollowedBy(user.getUserId(),null);
+
+        Date fechaActual = new Date();
+
+        List<LocalDate> fechas = currentPosts.getPostsList().stream()
+                .map(PostDTO::getDate)
+                .collect(Collectors.toList());
+
+
+        //Assert
+        Assertions.assertTrue(fechas.stream().allMatch(f -> f.isAfter(LocalDate.now().minusWeeks(2))));
+    }
+
+    
 
     @Test
     void getLastPostsFollowedBy_userNotFound(){
