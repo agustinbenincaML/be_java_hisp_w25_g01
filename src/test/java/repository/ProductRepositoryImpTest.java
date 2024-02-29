@@ -6,11 +6,21 @@ import com.example.be_java_hisp_w25_g01.repository.impl.ProductRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class ProductRepositoryImpTest {
 
     IProductRepository productRepository = new ProductRepositoryImpl();
 
+    @Test
+    void findById() {
+        Integer id = 2;
+
+        Product product = productRepository.findById(id).get();
+
+        assertEquals("Mouse inalámbrico", product.getProductName());
+    }
     @Test
     void findByIdOK(){
         Integer id = 1;
@@ -18,6 +28,6 @@ public class ProductRepositoryImpTest {
 
         Product currentProduct = productRepository.findById(id).get();
 
-        Assertions.assertEquals(currentProduct, expectedProduct);
+        assertEquals(currentProduct, expectedProduct);
     }
 }

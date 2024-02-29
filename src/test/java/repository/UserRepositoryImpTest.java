@@ -3,7 +3,6 @@ package repository;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
 import com.example.be_java_hisp_w25_g01.repository.impl.UserRepositoryImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -11,8 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 public class UserRepositoryImpTest {
 
@@ -24,7 +23,7 @@ public class UserRepositoryImpTest {
 
         User user = userRepository.findById(id).get();
 
-        Assertions.assertEquals("martinMarquez", user.getUserName());
+        assertEquals("martinMarquez", user.getUserName());
     }
 
     @Test
@@ -45,7 +44,6 @@ public class UserRepositoryImpTest {
         assertFalse(userRepository.findById(userToUnfollow.getUserId()).get().getFollowers().contains(user1.getUserId()));
     }
 
-
     @Test
     void followUserOkTest(){
         Integer userId = 1;
@@ -58,6 +56,17 @@ public class UserRepositoryImpTest {
         assertTrue(user.getFollowed().contains(userIdToFollow));
     }
 
+
+
+    @Test
+    void findAllByIdIn() {
+        List<Integer> useIds = List.of(1);
+
+        List<User> users = userRepository.findAllByIdIn(useIds);
+
+        assertEquals("martinMarquez", users.get(0).getUserName());
+
+    }
     @Test
     void findByIdInOK(){
         //Arrange
@@ -67,8 +76,8 @@ public class UserRepositoryImpTest {
         List<User> currentUsers = userRepository.findAllByIdIn(idList);
 
         //Assert
-        Assertions.assertEquals("martinMarquez", currentUsers.get(0).getUserName());
-        Assertions.assertEquals("ariJaime", currentUsers.get(1).getUserName());
+        assertEquals("martinMarquez", currentUsers.get(0).getUserName());
+        assertEquals("ariJaime", currentUsers.get(1).getUserName());
     }
 
 }
