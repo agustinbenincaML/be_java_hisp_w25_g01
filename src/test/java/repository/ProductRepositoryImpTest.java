@@ -6,6 +6,8 @@ import com.example.be_java_hisp_w25_g01.repository.impl.ProductRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class ProductRepositoryImpTest {
 
@@ -26,6 +28,6 @@ public class ProductRepositoryImpTest {
 
         Product currentProduct = productRepository.findById(id).get();
 
-        Assertions.assertEquals(currentProduct, expectedProduct);
+        assertEquals(currentProduct, expectedProduct);
     }
 }

@@ -3,7 +3,6 @@ package repository;
 import com.example.be_java_hisp_w25_g01.entity.User;
 import com.example.be_java_hisp_w25_g01.repository.IUserRepository;
 import com.example.be_java_hisp_w25_g01.repository.impl.UserRepositoryImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -11,10 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserRepositoryImpTest {
@@ -80,8 +76,8 @@ public class UserRepositoryImpTest {
         List<User> currentUsers = userRepository.findAllByIdIn(idList);
 
         //Assert
-        Assertions.assertEquals("martinMarquez", currentUsers.get(0).getUserName());
-        Assertions.assertEquals("ariJaime", currentUsers.get(1).getUserName());
+        assertEquals("martinMarquez", currentUsers.get(0).getUserName());
+        assertEquals("ariJaime", currentUsers.get(1).getUserName());
     }
 
 }
