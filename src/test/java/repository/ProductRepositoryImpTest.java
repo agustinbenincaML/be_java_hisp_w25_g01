@@ -12,6 +12,14 @@ public class ProductRepositoryImpTest {
     IProductRepository productRepository = new ProductRepositoryImpl();
 
     @Test
+    void findById() {
+        Integer id = 2;
+
+        Product product = productRepository.findById(id).get();
+
+        assertEquals("Mouse inalámbrico", product.getProductName());
+    }
+    @Test
     void findByIdOK(){
         Integer id = 1;
         Product expectedProduct= new Product(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition");
