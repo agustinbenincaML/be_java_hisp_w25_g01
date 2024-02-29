@@ -3,10 +3,6 @@ package controller;
 import com.example.be_java_hisp_w25_g01.controller.ProductController;
 import com.example.be_java_hisp_w25_g01.dto.response.PostsListDTO;
 import com.example.be_java_hisp_w25_g01.service.IPostService;
-import com.example.be_java_hisp_w25_g01.dto.response.MessagesDTO;
-import com.example.be_java_hisp_w25_g01.dto.response.PostsListDTO;
-import com.example.be_java_hisp_w25_g01.exception.BadRequestException;
-import com.example.be_java_hisp_w25_g01.service.IPostService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import util.TestUtilGenerator;
 
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

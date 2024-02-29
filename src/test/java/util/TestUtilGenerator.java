@@ -7,16 +7,11 @@ import com.example.be_java_hisp_w25_g01.dto.response.UserDTO;
 import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.entity.Product;
 import com.example.be_java_hisp_w25_g01.entity.User;
-import com.example.be_java_hisp_w25_g01.entity.User;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import net.bytebuddy.asm.Advice;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public class TestUtilGenerator {
 
@@ -44,13 +39,13 @@ public class TestUtilGenerator {
         product.setType("Gamer");
         product.setBrand("Racer");
 
-        return new PostDTO(1, 1,LocalDate.of(2024,01,02), product, 100, 1500.50);
+        return new PostDTO(5,1, LocalDate.of(2024,01,02), product, 100, 1500.50);
     }
 
 
     public static PostsListDTO getPostListDTO(){
-        PostDTO post1 = new PostDTO(2, 1, LocalDate.of(2024, Month.FEBRUARY,26),new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 100, 1500.00);
-        PostDTO post2 = new PostDTO(2, 1, LocalDate.of(2024, Month.FEBRUARY,20),  new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 120, 2800.69);
+        PostDTO post1 = new PostDTO(5,2, LocalDate.of(2024, Month.FEBRUARY,26),new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 100, 1500.00);
+        PostDTO post2 = new PostDTO(5,2, LocalDate.of(2024, Month.FEBRUARY,20),  new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 120, 2800.69);
 
        return new PostsListDTO(1, List.of(post1,post2));
     }

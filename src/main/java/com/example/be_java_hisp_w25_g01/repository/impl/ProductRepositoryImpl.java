@@ -3,8 +3,6 @@ package com.example.be_java_hisp_w25_g01.repository.impl;
 import com.example.be_java_hisp_w25_g01.entity.Product;
 import com.example.be_java_hisp_w25_g01.repository.IProductRepository;
 import org.springframework.stereotype.Repository;
-
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,7 +1,6 @@
 package com.example.be_java_hisp_w25_g01.repository;
 
 import com.example.be_java_hisp_w25_g01.entity.Product;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

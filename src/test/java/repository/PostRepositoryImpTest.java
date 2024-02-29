@@ -3,6 +3,8 @@ package repository;
 import com.example.be_java_hisp_w25_g01.entity.Post;
 import com.example.be_java_hisp_w25_g01.repository.IPostRepository;
 import com.example.be_java_hisp_w25_g01.repository.impl.PostRepositoryImpl;
+import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
