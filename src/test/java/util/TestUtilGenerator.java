@@ -44,15 +44,15 @@ public class TestUtilGenerator {
 
 
     public static PostsListDTO getPostListDTO(){
-        PostDTO post1 = new PostDTO(5,2, LocalDate.of(2024, Month.FEBRUARY,26),new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 100, 1500.00);
-        PostDTO post2 = new PostDTO(5,2, LocalDate.of(2024, Month.FEBRUARY,20),  new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 120, 2800.69);
+        PostDTO post1 = new PostDTO(5,2, LocalDate.now().minusDays(2),new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 100, 1500.00);
+        PostDTO post2 = new PostDTO(5,2, LocalDate.now().minusDays(10),  new ProductDTO(1,"Silla Gamer", "Gamer", "Razer", "Red & Black", "Special Edition"), 120, 2800.69);
 
        return new PostsListDTO(1, List.of(post1,post2));
     }
 
     public static List<Post> getPostList(){
-        Post post1 = new Post(2, 5, LocalDate.of(2024, Month.FEBRUARY,26),1, 100, 1500.00);
-        Post post2 = new Post(2,5, LocalDate.of(2024, Month.FEBRUARY,20),  1, 120, 2800.69);
+        Post post1 = new Post(2, 5, LocalDate.now().minusDays(2),1, 100, 1500.00);
+        Post post2 = new Post(2,5,LocalDate.now().minusDays(10),  1, 120, 2800.69);
 
         return List.of(post1,post2);
     }
